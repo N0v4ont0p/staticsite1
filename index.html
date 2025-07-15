@@ -3,168 +3,330 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>📸 George's Photo Gallery - Persistent Storage Version</title>
+  <title>George’s Photo Gallery</title>
+  <meta name="description" content="Minimalist, responsive, and elegant photo gallery.">
+  <meta property="og:title" content="George’s Photo Gallery">
+  <meta property="og:description" content="Minimalist, responsive, and elegant photo gallery.">
+  <meta property="og:image" content="gallery-preview.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="George’s Photo Gallery">
+  <meta name="twitter:description" content="Minimalist, responsive, and elegant photo gallery.">
+  <meta name="twitter:image" content="gallery-preview.jpg">
+  <link rel="icon" href="apple.svg" type="image/svg+xml">
   <style>
-    body { font-family: 'Segoe UI', Arial, sans-serif; background: #f7f7fb; margin: 0; color: #222; }
-    header { background: #222; color: #fff; padding: 2rem 1rem; text-align: center; }
-    h1 { margin-bottom: .5rem; font-size: 2.5rem; letter-spacing: 1px; }
-    .subtitle { font-size: 1.2rem; margin-bottom: 1rem; font-weight: 400; }
-    section { max-width: 900px; margin: 2rem auto; padding: 2rem; background: #fff; border-radius: 14px; box-shadow: 0 2px 16px #e2e2ef; }
-    h2 { margin-top: 0; color: #7741d9; }
-    ul, .features { margin: 1rem 0; padding-left: 1.2rem; }
-    li { margin-bottom: .5rem; line-height: 1.6; }
-    .features { display: flex; flex-wrap: wrap; gap: 2rem; }
-    .features div { flex: 1 1 240px; background: #f9f6ff; border-radius: 10px; padding: 1rem; margin-bottom: 1rem; box-shadow: 0 1px 4px #ececec; }
-    .contact, .result, .howto { margin-top: 2rem; background: #f2f3fa; border-radius: 10px; padding: 1.5rem; }
-    .admin, .free-tier { margin-top: 2rem; }
-    code, .env-vars { background: #f5f2ff; border-radius: 4px; padding: 2px 6px; font-size: 1em; }
-    @media (max-width: 700px) {
-      section, .features { padding: 1rem; }
-      h1 { font-size: 2rem; }
+    :root {
+      --accent: #0070f3;
+      --background: #fff;
+      --text: #111;
+      --muted: #888;
+      --shadow: 0 4px 32px rgba(34,34,42,0.08);
+      --nav-height: 60px;
+      --font-main: 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+      --transition: .35s cubic-bezier(.5,.2,.2,1);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --background: #18181c;
+        --text: #fafafa;
+        --muted: #bbb;
+      }
+      body { background: var(--background); color: var(--text); }
+    }
+    html, body { margin:0; padding:0; font-family:var(--font-main); background:var(--background); color:var(--text); }
+    body { font-size: 18px; line-height: 1.6; }
+    /* --- NAVBAR --- */
+    .navbar {
+      position:sticky; top:0; z-index:999;
+      height:var(--nav-height); background:rgba(255,255,255,0.95);
+      box-shadow:0 1px 6px rgba(0,0,0,0.02);
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 0 2rem;
+      backdrop-filter: blur(8px);
+      font-size:1.1em;
+    }
+    .navbar .logo { font-size:1.7em; font-weight:700; letter-spacing:-1px; }
+    .navbar .nav-links {
+      display:flex; gap:2.5rem; justify-content:center; align-items:center;
+      flex:1;
+    }
+    .navbar .nav-links a {
+      color:var(--text); text-decoration:none; font-weight:500;
+      transition:color .2s;
+      padding:2px 0;
+      border-bottom:2px solid transparent;
+    }
+    .navbar .nav-links a.active, .navbar .nav-links a:hover {
+      color:var(--accent);
+      border-bottom:2px solid var(--accent);
+    }
+    .navbar .icons {
+      display:flex; gap:1.5rem; align-items:center;
+    }
+    .navbar .icon { width:24px; height:24px; opacity:.7; transition:opacity .2s; }
+    .navbar .icon:hover { opacity:1; }
+    /* --- HERO --- */
+    .hero {
+      display:flex; flex-direction:column; align-items:center;
+      justify-content:center; min-height:55vh;
+      padding-top:3.5rem; padding-bottom:2.5rem;
+      background:linear-gradient(90deg,#f8fafd 80%, #eaf1fd 100%);
+      box-shadow:var(--shadow);
+      margin-bottom: 2.5rem;
+    }
+    .hero h1 {
+      font-size:2.8rem; font-weight:800; letter-spacing:-2px; margin:0;
+      line-height:1.08; margin-bottom:0.8rem;
+    }
+    .hero .subtitle {
+      font-size:1.25rem; font-weight:400; color:var(--muted); margin-bottom:1.2rem;
+    }
+    .hero .cta {
+      display:inline-block; margin-top:1.5rem; font-size:1.1em;
+      background:var(--accent); color:#fff; border-radius:9px; padding:0.7em 2em;
+      font-weight:600; text-decoration:none; box-shadow:0 2px 12px #0070f342;
+      transition:background .2s, transform .2s;
+    }
+    .hero .cta:hover { background:#0051b8; transform:scale(1.04);}
+    /* --- FEATURES --- */
+    .features {
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:2.5rem;
+      max-width:1000px; margin:0 auto; padding:2.5rem 1rem 1rem 1rem;
+    }
+    .feature-card {
+      background:var(--background); box-shadow:0 2px 24px #eee7;
+      border-radius:15px; padding:2rem 1.3rem 1.3rem 1.3rem;
+      display:flex; flex-direction:column; gap:1rem; align-items:flex-start; min-height:200px;
+      transition:box-shadow .2s, transform .2s;
+      opacity:0; transform:translateY(40px); animation:fadein .9s cubic-bezier(.5,.2,.2,1) forwards;
+    }
+    .feature-card:nth-child(1) { animation-delay:.1s;}
+    .feature-card:nth-child(2) { animation-delay:.3s;}
+    .feature-card:nth-child(3) { animation-delay:.5s;}
+    @keyframes fadein {
+      to { opacity:1; transform:translateY(0);}
+    }
+    .feature-card h3 { font-size:1.3em; font-weight:700; margin:0; color:var(--accent);}
+    .feature-card ul { margin:0; padding-left:1.1em; font-size:.95em; color:var(--muted);}
+    .feature-card li { margin-bottom:.5em;}
+    /* --- GALLERY --- */
+    .gallery {
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:2rem;
+      max-width:1200px; margin:0 auto; padding:2rem 1rem;
+    }
+    .photo-card {
+      background:var(--background); border-radius:12px; box-shadow:0 2px 12px #ececec;
+      overflow:hidden; position:relative; transition:transform .22s, box-shadow .22s;
+      min-height:320px; max-width:100%; display:flex; flex-direction:column; justify-content:flex-end;
+    }
+    .photo-card:hover { transform:scale(1.03); box-shadow:0 6px 32px #dadada; }
+    .photo-card img {
+      width:100%; height:auto; display:block; object-fit:cover;
+      border-bottom:1px solid #f3f3f3;
+      opacity:0; animation:fadeinimg .7s forwards;
+    }
+    @keyframes fadeinimg {
+      to { opacity:1; }
+    }
+    .photo-info {
+      padding:1rem 1.2rem;
+    }
+    .photo-info h4 { font-size:1.1em; font-weight:600; margin:0 0 .3em 0;}
+    .photo-info p { font-size:0.97em; color:var(--muted); margin:0;}
+    /* --- COMPARISON / STORY --- */
+    .story {
+      max-width:900px; margin:3rem auto; padding:2rem 1rem;
+      display:flex; flex-direction:column; gap:2rem;
+      background:var(--background); border-radius:12px; box-shadow:var(--shadow);
+    }
+    .story h2 { font-size:1.7em; margin-bottom:.5em;}
+    .comparison-table {
+      width:100%; border-collapse:collapse; margin-top:1em;
+    }
+    .comparison-table th, .comparison-table td {
+      padding:.7em; border-bottom:1px solid #f2f2f4; text-align:left;
+      font-size:1em; font-weight:400;
+    }
+    .comparison-table th { color:var(--accent);}
+    /* --- FOOTER --- */
+    footer {
+      background:#f8fafd; color:var(--muted);
+      padding:2.5rem 1.2rem 1.2rem 1.2rem; margin-top:2.5rem;
+      font-size:.98em;
+      border-top:1.5px solid #ececec;
+      display:flex; flex-wrap:wrap; gap:2rem; justify-content:space-between;
+    }
+    .footer-cols { display:flex; gap:2.5rem; flex:2; flex-wrap:wrap;}
+    .footer-col { min-width:140px;}
+    .footer-col h5 { margin:0 0 .7em 0; color:var(--text); font-size:1.1em;}
+    .footer-col ul { list-style:none; padding:0; margin:0;}
+    .footer-col ul li { margin-bottom:.6em;}
+    .footer-col ul li a { color:var(--muted); text-decoration:none; transition:color .2s;}
+    .footer-col ul li a:hover { color:var(--accent);}
+    .footer-legal { flex:1; text-align:right; min-width:180px;}
+    @media (max-width:850px) {
+      .features, .gallery { grid-template-columns:1fr;}
+      .footer-cols { flex-direction:column;}
+      .footer-legal { text-align:left; margin-top:1.5em;}
+    }
+    /* --- ACCESSIBILITY --- */
+    a:focus, button:focus {
+      outline:2px solid var(--accent); outline-offset:2px;
+    }
+    /* --- MICROINTERACTIONS --- */
+    .photo-card:active { transform:scale(.98);}
+    /* --- HAMBURGER --- */
+    .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; }
+    .bar { width:25px; height:3px; background:var(--text); border-radius:2px;}
+    @media (max-width:650px) {
+      .navbar .nav-links { display:none; }
+      .navbar .icons { gap:.7rem;}
+      .hamburger { display:flex;}
+      .navbar.active .nav-links { display:flex; flex-direction:column; position:absolute; top:var(--nav-height); left:0; right:0; background:var(--background); box-shadow:0 2px 12px #eee7; z-index:998; padding:1.5em 0; }
     }
   </style>
+  <script>
+    // Hamburger menu
+    document.addEventListener("DOMContentLoaded",function(){
+      const nav=document.querySelector('.navbar');
+      const ham=document.querySelector('.hamburger');
+      ham&&ham.addEventListener('click',()=>nav.classList.toggle('active'));
+    });
+  </script>
 </head>
 <body>
-  <header>
-    <h1>📸 George's Photo Gallery</h1>
-    <div class="subtitle">Persistent Storage Version — Photos Safe Forever!</div>
-    <div>Contact: <a href="mailto:georgehu67@gmail.com" style="color:#ffd700;">georgehu67@gmail.com</a></div>
-  </header>
-
-  <section>
-    <h2>✨ Features</h2>
-    <div class="features">
-      <div>
-        <strong>🎨 Beautiful Gallery</strong>
-        <ul>
-          <li>Modern, responsive design</li>
-          <li>Smooth animations & hover effects</li>
-          <li>Mobile-friendly layout</li>
-          <li>Professional photography showcase</li>
-        </ul>
-      </div>
-      <div>
-        <strong>🔐 Secure Admin Panel</strong>
-        <ul>
-          <li>Password-protected admin access</li>
-          <li>Drag & drop photo upload</li>
-          <li>Easy photo management (delete/edit)</li>
-          <li>Batch upload support</li>
-        </ul>
-      </div>
-      <div>
-        <strong>☁️ Permanent Storage (NEW!)</strong>
-        <ul>
-          <li>Cloudinary integration for photo storage</li>
-          <li>Photos NEVER disappear (even after server restarts)</li>
-          <li>Global CDN for fast loading worldwide</li>
-          <li>25GB free storage (thousands of photos)</li>
-          <li>Automatic fallback if cloud storage fails</li>
-        </ul>
+  <!-- NAVBAR -->
+  <nav class="navbar" role="navigation" aria-label="Main Navigation">
+    <div class="logo" aria-label="Apple Logo"></div>
+    <div class="nav-links">
+      <a href="#" class="active">Home</a>
+      <a href="#">Gallery</a>
+      <a href="#">Compare</a>
+      <a href="#">Buy</a>
+      <a href="#">Support</a>
+    </div>
+    <div class="icons">
+      <img src="bag.svg" alt="Bag" class="icon" aria-label="Shopping Bag">
+      <img src="profile.svg" alt="Profile" class="icon" aria-label="Profile">
+      <div class="hamburger" aria-label="Menu" tabindex="0">
+        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
       </div>
     </div>
+  </nav>
+  
+  <!-- HERO SECTION -->
+  <section class="hero" aria-label="Hero Section">
+    <h1>George’s Photo Gallery</h1>
+    <div class="subtitle">Minimal. Modern. Beautiful. Your photos, safe forever.</div>
+    <a href="#" class="cta" aria-label="Buy Now">Buy</a>
   </section>
 
-  <section class="howto">
-    <h2>🚀 Quick Deployment</h2>
-    <ol>
-      <li><strong>Step 1:</strong> Deploy to Render
+  <!-- FEATURES -->
+  <section class="features" aria-label="Key Features">
+    <div class="feature-card">
+      <h3>🖼 Visual Design</h3>
+      <ul>
+        <li>Minimalist, clean grid layout</li>
+        <li>Elegant typography, smooth animations</li>
+        <li>High-res, edge-to-edge imagery</li>
+      </ul>
+    </div>
+    <div class="feature-card">
+      <h3>🧭 Navigation & Responsiveness</h3>
+      <ul>
+        <li>Sticky top bar, mega-menu, structured footer</li>
+        <li>Adaptive, touch-friendly layouts for all devices</li>
+        <li>Optimized images, retina support</li>
+      </ul>
+    </div>
+    <div class="feature-card">
+      <h3>🧠 UX & Content</h3>
+      <ul>
+        <li>Intuitive, scroll-based storytelling</li>
+        <li>Confident, human copywriting</li>
+        <li>Benefit-focused product sections</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- GALLERY / SHOWCASE -->
+  <section class="gallery" aria-label="Photo Gallery">
+    <div class="photo-card">
+      <img src="photo1.jpg" alt="Product close-up photo" loading="lazy" width="640" height="400">
+      <div class="photo-info">
+        <h4>Midnight</h4>
+        <p>Edge-to-edge brilliance. See every detail come alive. </p>
+      </div>
+    </div>
+    <div class="photo-card">
+      <img src="photo2.jpg" alt="Lifestyle photo" loading="lazy" width="640" height="400">
+      <div class="photo-info">
+        <h4>Starlight</h4>
+        <p>Light as air. Designed for every moment that matters. </p>
+      </div>
+    </div>
+    <div class="photo-card">
+      <img src="photo3.jpg" alt="Device render" loading="lazy" width="640" height="400">
+      <div class="photo-info">
+        <h4>Space Gray</h4>
+        <p>Power meets elegance. Crafted for your workflow.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STORY / COMPARISON -->
+  <section class="story" aria-label="Product Comparison">
+    <h2>Compare Models</h2>
+    <table class="comparison-table" aria-label="Comparison Table">
+      <tr>
+        <th>Model</th><th>Color</th><th>Storage</th><th>Price</th>
+      </tr>
+      <tr>
+        <td>Pro</td><td>Midnight</td><td>1TB</td><td>$299</td>
+      </tr>
+      <tr>
+        <td>Air</td><td>Starlight</td><td>512GB</td><td>$199</td>
+      </tr>
+      <tr>
+        <td>Classic</td><td>Space Gray</td><td>256GB</td><td>$129</td>
+      </tr>
+    </table>
+    <div style="margin-top:1.5em;">
+      <a href="#" class="cta" aria-label="Learn More">Learn More</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-cols">
+      <div class="footer-col">
+        <h5>Store</h5>
         <ul>
-          <li>Upload all files to your GitHub repository</li>
-          <li>Connect to <a href="https://render.com/" target="_blank">Render.com</a></li>
-          <li>Deploy as Web Service</li>
-          <li>Start Command: <code>gunicorn app:app</code></li>
+          <li><a href="#">Shop</a></li>
+          <li><a href="#">Photo Gallery</a></li>
+          <li><a href="#">Gift Cards</a></li>
         </ul>
-      </li>
-      <li><strong>Step 2:</strong> Set Up Cloudinary (IMPORTANT!)
+      </div>
+      <div class="footer-col">
+        <h5>Support</h5>
         <ul>
-          <li>Create free account at <a href="https://cloudinary.com/" target="_blank">cloudinary.com</a></li>
-          <li>Get your API credentials (<code>Cloud Name</code>, <code>API Key</code>, <code>API Secret</code>)</li>
-          <li>Add as environment variables in Render:</li>
-          <ul class="env-vars">
-            <li><code>CLOUDINARY_CLOUD_NAME = your_cloud_name</code></li>
-            <li><code>CLOUDINARY_API_KEY = your_api_key</code></li>
-            <li><code>CLOUDINARY_API_SECRET = your_api_secret</code></li>
-          </ul>
-          <li>Redeploy your service</li>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Privacy</a></li>
         </ul>
-      </li>
-      <li>📖 See detailed setup guide: <strong>CLOUDINARY_SETUP.md</strong></li>
-    </ol>
-  </section>
-
-  <section>
-    <h2>🎯 How to Use</h2>
-    <div>
-      <strong>Public Gallery:</strong>
-      <ul>
-        <li>Visit your main URL to see all photos</li>
-        <li>Click photos to view full size</li>
-        <li>Download button available in photo viewer</li>
-        <li>Contact info: <a href="mailto:georgehu67@gmail.com">georgehu67@gmail.com</a></li>
-      </ul>
+      </div>
+      <div class="footer-col">
+        <h5>About</h5>
+        <ul>
+          <li><a href="#">Our Story</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Legal</a></li>
+        </ul>
+      </div>
     </div>
-    <div class="admin">
-      <strong>Admin Panel:</strong>
-      <ul>
-        <li>Go to <code>/admin</code> on your website</li>
-        <li>Password: <strong>Hanshow99@</strong></li>
-        <li>Drag & drop photos to upload</li>
-        <li>Hover over photos to delete</li>
-        <li>Logout when finished</li>
-      </ul>
+    <div class="footer-legal">
+      &copy; 2025 George’s Gallery &mdash; All Rights Reserved.<br>
+      <a href="#" style="color:var(--muted);">Sitemap</a> &bull; <a href="#" style="color:var(--muted);">Privacy Policy</a>
     </div>
-  </section>
-
-  <section>
-    <h2>🔧 Technical Details</h2>
-    <ul>
-      <li><strong>Frontend:</strong> React.js, Responsive CSS Grid, Modal photo viewer, Admin authentication</li>
-      <li><strong>Backend:</strong> Flask API, Cloudinary SDK, JSON metadata, fallback system</li>
-      <li><strong>Storage:</strong> Cloudinary (primary), Base64 (fallback), Metadata JSON backup</li>
-    </ul>
-    <div>
-      <strong>🛡️ Reliability:</strong>
-      <ul>
-        <li>✅ Cloud storage (photos persist forever)</li>
-        <li>✅ Automatic fallback (works even if Cloudinary fails)</li>
-        <li>✅ JSON backup (metadata always saved)</li>
-        <li>✅ Error handling (graceful failure recovery)</li>
-      </ul>
-      <em>No More Lost Photos:</em>
-      <ul>
-        <li>Server restarts ✅</li>
-        <li>Redeployments ✅</li>
-        <li>Platform changes ✅</li>
-        <li>Accidental deletion ✅ (admin-only access)</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="free-tier">
-    <h2>📊 Free Tier Limits</h2>
-    <ul>
-      <li><strong>Render (Hosting):</strong> 750 hours/month, sleeps after 15 min inactivity, perfect for personal galleries</li>
-      <li><strong>Cloudinary (Storage):</strong> 25GB storage & bandwidth/month, global CDN, perfect for personal galleries</li>
-    </ul>
-  </section>
-
-  <section class="result">
-    <h2>🎉 Result</h2>
-    <ul>
-      <li>Professional photo gallery — showcases your photography beautifully</li>
-      <li>Photos never lost, always safe</li>
-      <li>Fast loading worldwide</li>
-      <li>Easy management & updates</li>
-      <li>Completely free to run!</li>
-    </ul>
-    <p style="font-size:1.2em; margin-top:1em;">
-      <strong>Your photos are now safe forever! 📸✨</strong>
-    </p>
-    <div class="contact">
-      <strong>Contact:</strong> <a href="mailto:georgehu67@gmail.com">georgehu67@gmail.com</a><br>
-      <strong>Admin Password:</strong> Hanshow99@
-    </div>
-  </section>
+  </footer>
 </body>
 </html>
