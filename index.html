@@ -2,330 +2,368 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <title>George's Photo Gallery – Safe, Stunning, Forever</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>George’s Photo Gallery</title>
-  <meta name="description" content="Minimalist, responsive, and elegant photo gallery.">
-  <meta property="og:title" content="George’s Photo Gallery">
-  <meta property="og:description" content="Minimalist, responsive, and elegant photo gallery.">
-  <meta property="og:image" content="gallery-preview.jpg">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="George’s Photo Gallery">
-  <meta name="twitter:description" content="Minimalist, responsive, and elegant photo gallery.">
-  <meta name="twitter:image" content="gallery-preview.jpg">
-  <link rel="icon" href="apple.svg" type="image/svg+xml">
+  <meta name="description" content="A visually stunning, professional-grade gallery with permanent cloud storage, elegant UI, and secure admin.">
   <style>
     :root {
       --accent: #0070f3;
-      --background: #fff;
-      --text: #111;
-      --muted: #888;
-      --shadow: 0 4px 32px rgba(34,34,42,0.08);
-      --nav-height: 60px;
-      --font-main: 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
-      --transition: .35s cubic-bezier(.5,.2,.2,1);
+      --accent2: #00c6fd;
+      --background: #f7faff;
+      --shadow: 0 16px 50px 0 rgba(34,34,42,0.13);
+      --radius: 32px;
+      --font-main: 'Inter', 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+      --gradient-hero: linear-gradient(120deg,#eaf1fd 0%, #d4eafd 100%);
+      --gradient-card: linear-gradient(120deg,#fff 0%, #eaf1fd 100%);
     }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --background: #18181c;
-        --text: #fafafa;
-        --muted: #bbb;
-      }
-      body { background: var(--background); color: var(--text); }
+    body {
+      margin:0; padding:0; font-family:var(--font-main); background:var(--background); color:#222;
+      font-size:19px; line-height:1.75; letter-spacing:.01em;
     }
-    html, body { margin:0; padding:0; font-family:var(--font-main); background:var(--background); color:var(--text); }
-    body { font-size: 18px; line-height: 1.6; }
-    /* --- NAVBAR --- */
-    .navbar {
-      position:sticky; top:0; z-index:999;
-      height:var(--nav-height); background:rgba(255,255,255,0.95);
-      box-shadow:0 1px 6px rgba(0,0,0,0.02);
-      display:flex; align-items:center; justify-content:space-between;
-      padding: 0 2rem;
-      backdrop-filter: blur(8px);
-      font-size:1.1em;
+    /* ---- Floating Bg ---- */
+    .bg-art {
+      position:fixed; z-index:-1; pointer-events:none; opacity:.10;
+      filter:blur(8px);
+      animation:bgfloat 11s infinite alternate cubic-bezier(.6,.2,.4,1);
     }
-    .navbar .logo { font-size:1.7em; font-weight:700; letter-spacing:-1px; }
-    .navbar .nav-links {
-      display:flex; gap:2.5rem; justify-content:center; align-items:center;
-      flex:1;
-    }
-    .navbar .nav-links a {
-      color:var(--text); text-decoration:none; font-weight:500;
-      transition:color .2s;
-      padding:2px 0;
-      border-bottom:2px solid transparent;
-    }
-    .navbar .nav-links a.active, .navbar .nav-links a:hover {
-      color:var(--accent);
-      border-bottom:2px solid var(--accent);
-    }
-    .navbar .icons {
-      display:flex; gap:1.5rem; align-items:center;
-    }
-    .navbar .icon { width:24px; height:24px; opacity:.7; transition:opacity .2s; }
-    .navbar .icon:hover { opacity:1; }
-    /* --- HERO --- */
+    .bg-art1 { left:-60px; top:-60px; width:380px; height:380px;}
+    .bg-art2 { right:-40px; bottom:-40px; width:260px; height:260px; animation-delay:2s;}
+    @keyframes bgfloat { from{transform:scale(1) rotate(0deg);} to{transform:scale(1.08) rotate(12deg);} }
+
+    /* ---- Hero ---- */
     .hero {
-      display:flex; flex-direction:column; align-items:center;
-      justify-content:center; min-height:55vh;
-      padding-top:3.5rem; padding-bottom:2.5rem;
-      background:linear-gradient(90deg,#f8fafd 80%, #eaf1fd 100%);
+      background:var(--gradient-hero);
+      border-radius:var(--radius);
       box-shadow:var(--shadow);
-      margin-bottom: 2.5rem;
+      max-width:920px;
+      margin:2.5rem auto 3.5rem auto;
+      padding:4rem 2rem 3rem 2rem;
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+      animation:fadeUp 1.05s cubic-bezier(.5,.2,.2,1);
     }
-    .hero h1 {
-      font-size:2.8rem; font-weight:800; letter-spacing:-2px; margin:0;
-      line-height:1.08; margin-bottom:0.8rem;
+    @keyframes fadeUp { from{ opacity:0; transform:translateY(60px);} to{ opacity:1; transform:translateY(0);} }
+    .hero-title {
+      font-size:2.95rem; font-weight:900; letter-spacing:-2px; margin-bottom:.7em;
+      background:linear-gradient(90deg,#0070f3 25%,#00c6fd 80%);
+      background-clip:text; -webkit-background-clip:text; color:transparent;
+      -webkit-text-fill-color:transparent; text-shadow:0 2px 8px #eaf1fd;
+      animation:fadeUp .7s;
     }
-    .hero .subtitle {
-      font-size:1.25rem; font-weight:400; color:var(--muted); margin-bottom:1.2rem;
+    .hero-sub {
+      font-size:1.29rem; color:#555; font-weight:400; margin-bottom:2.2em;
+      animation:fadeUp .8s;
+      max-width:520px; margin-left:auto; margin-right:auto;
     }
-    .hero .cta {
-      display:inline-block; margin-top:1.5rem; font-size:1.1em;
-      background:var(--accent); color:#fff; border-radius:9px; padding:0.7em 2em;
-      font-weight:600; text-decoration:none; box-shadow:0 2px 12px #0070f342;
+    .hero-icon {
+      font-size:5rem; color:var(--accent); opacity:.28;
+      margin-bottom:1.5rem; animation:iconPulse 2.2s infinite alternate cubic-bezier(.7,.2,.5,1);
+      display:block;
+    }
+    @keyframes iconPulse { 0% {transform:scale(1);} 100% {transform:scale(1.13) rotate(-8deg);} }
+    .hero-badges {
+      display:flex; justify-content:center; gap:1.5rem; flex-wrap:wrap;
+      margin-bottom:2em; margin-top:1.5em;
+    }
+    .badge {
+      background:#fff;
+      color:var(--accent);
+      font-weight:700;
+      padding:.5em 1.2em;
+      border-radius:18px;
+      box-shadow:0 2px 18px #eaf1fd33;
+      font-size:1.1em;
+      letter-spacing:-.5px;
+      display:flex; align-items:center; gap:.6em;
+      animation:fadeUpBadge .7s;
+    }
+    @keyframes fadeUpBadge { from{opacity:0;transform:translateY(18px);} to{opacity:1;transform:translateY(0);} }
+    .hero-cta {
+      display:inline-block; margin-top:1.7rem; font-size:1.14em;
+      background:var(--accent2); color:#fff; border-radius:13px; padding:1em 2.5em;
+      font-weight:700; letter-spacing:.02em; border:none; cursor:pointer; outline:none;
+      box-shadow:0 4px 22px #0070f342;
       transition:background .2s, transform .2s;
+      animation:ctaFade 1.2s;
     }
-    .hero .cta:hover { background:#0051b8; transform:scale(1.04);}
-    /* --- FEATURES --- */
-    .features {
-      display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:2.5rem;
-      max-width:1000px; margin:0 auto; padding:2.5rem 1rem 1rem 1rem;
+    @keyframes ctaFade { from{ opacity:0; transform:scale(.96);} to{ opacity:1; transform:scale(1);} }
+    .hero-cta:hover { background:#0070f3; transform:scale(1.09);}
+    /* ---- Section ---- */
+    .section-title {
+      font-size:2.1rem; font-weight:800; color:var(--accent);
+      text-align:center; margin:3.6rem 0 2.3rem 0; letter-spacing:-1.3px;
+      background:linear-gradient(90deg,#0070f3 20%,#00c6fd 80%);
+      background-clip:text; -webkit-background-clip:text; color:transparent;
+      -webkit-text-fill-color:transparent;
+      text-shadow:0 2px 12px #eaf1fd77;
     }
-    .feature-card {
-      background:var(--background); box-shadow:0 2px 24px #eee7;
-      border-radius:15px; padding:2rem 1.3rem 1.3rem 1.3rem;
-      display:flex; flex-direction:column; gap:1rem; align-items:flex-start; min-height:200px;
-      transition:box-shadow .2s, transform .2s;
-      opacity:0; transform:translateY(40px); animation:fadein .9s cubic-bezier(.5,.2,.2,1) forwards;
+    /* ---- Feature Cards ---- */
+    .card-grid {
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(330px,1fr)); gap:2.7rem;
+      margin-bottom:2.5rem; max-width:1100px; margin-left:auto; margin-right:auto;
     }
-    .feature-card:nth-child(1) { animation-delay:.1s;}
-    .feature-card:nth-child(2) { animation-delay:.3s;}
-    .feature-card:nth-child(3) { animation-delay:.5s;}
-    @keyframes fadein {
-      to { opacity:1; transform:translateY(0);}
+    .card {
+      background:var(--gradient-card);
+      border-radius:22px;
+      box-shadow:0 8px 32px #0070f322,0 1px 12px #ececec;
+      padding:2.6rem 2rem 2.1rem 2rem;
+      display:flex; flex-direction:column; align-items:center; gap:1.2rem;
+      min-height:240px;
+      position:relative; overflow:hidden; z-index:1;
+      animation:cardPulse .95s cubic-bezier(.5,.2,.2,1);
+      animation-fill-mode:forwards;
+      opacity:0; transform:translateY(40px) scale(.97);
+      will-change:transform,opacity;
+      transition:box-shadow .18s, transform .17s, background .18s;
+      border:2.5px solid #f0f7ff;
     }
-    .feature-card h3 { font-size:1.3em; font-weight:700; margin:0; color:var(--accent);}
-    .feature-card ul { margin:0; padding-left:1.1em; font-size:.95em; color:var(--muted);}
-    .feature-card li { margin-bottom:.5em;}
-    /* --- GALLERY --- */
-    .gallery {
-      display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:2rem;
-      max-width:1200px; margin:0 auto; padding:2rem 1rem;
+    @keyframes cardPulse { to { opacity:1; transform:translateY(0) scale(1);} }
+    .card:hover {
+      box-shadow:0 16px 44px #00c6fd21,0 2px 18px #ececec;
+      transform:scale(1.04) translateY(-2px);
+      background:linear-gradient(98deg,#f3f8ff 60%, #fff 100%);
+      border-color:var(--accent2);
     }
-    .photo-card {
-      background:var(--background); border-radius:12px; box-shadow:0 2px 12px #ececec;
-      overflow:hidden; position:relative; transition:transform .22s, box-shadow .22s;
-      min-height:320px; max-width:100%; display:flex; flex-direction:column; justify-content:flex-end;
+    .card .card-icon {
+      font-size:2.6em; margin-bottom:.1em; color:var(--accent2); opacity:.49;
+      animation:iconPulse2 2.7s infinite alternate cubic-bezier(.7,.2,.5,1);
+      display:inline-block;
     }
-    .photo-card:hover { transform:scale(1.03); box-shadow:0 6px 32px #dadada; }
-    .photo-card img {
-      width:100%; height:auto; display:block; object-fit:cover;
-      border-bottom:1px solid #f3f3f3;
-      opacity:0; animation:fadeinimg .7s forwards;
+    @keyframes iconPulse2 { to { transform:scale(1.13) rotate(-10deg); } }
+    .card h2 {
+      font-size:1.21em; font-weight:700; margin:0 0 .3em 0; color:var(--accent);
+      letter-spacing:-.7px; margin-bottom:.1em;
+      text-shadow:0 2px 12px #eaf1fd77;
     }
-    @keyframes fadeinimg {
-      to { opacity:1; }
+    /* --- Aspect Box --- */
+    .aspect-boxes {
+      display:flex; flex-wrap:wrap; justify-content:center; gap:2.5rem; margin-bottom:2.2rem; margin-top:1rem;
     }
-    .photo-info {
-      padding:1rem 1.2rem;
+    .aspect-box {
+      flex:1 1 320px;
+      max-width:370px;
+      padding:2.2rem 1.2rem 2rem 1.2rem;
+      background:linear-gradient(110deg,#f7fcff 60%,#eaf1fd 100%);
+      border-radius:20px;
+      box-shadow:0 2px 16px #0070f32a;
+      display:flex; flex-direction:column; align-items:center; position:relative;
+      transition:box-shadow .18s, transform .17s, background .18s;
+      margin-bottom:1.2rem;
+      overflow:hidden;
+      animation:cardPulse .9s cubic-bezier(.5,.2,.2,1);
+      animation-fill-mode:forwards;
+      opacity:0; transform:translateY(32px) scale(.97);
+      will-change:transform,opacity;
+      border:2.5px solid #eaf1fd;
     }
-    .photo-info h4 { font-size:1.1em; font-weight:600; margin:0 0 .3em 0;}
-    .photo-info p { font-size:0.97em; color:var(--muted); margin:0;}
-    /* --- COMPARISON / STORY --- */
-    .story {
-      max-width:900px; margin:3rem auto; padding:2rem 1rem;
-      display:flex; flex-direction:column; gap:2rem;
-      background:var(--background); border-radius:12px; box-shadow:var(--shadow);
+    .aspect-box:hover {
+      box-shadow:0 8px 32px #0070f322;
+      transform:scale(1.04) translateY(-2px);
+      background:linear-gradient(100deg,#eaf1fd 40%,#fff 100%);
+      border-color:var(--accent2);
     }
-    .story h2 { font-size:1.7em; margin-bottom:.5em;}
-    .comparison-table {
-      width:100%; border-collapse:collapse; margin-top:1em;
+    .aspect-title {
+      font-size:1.13em; font-weight:800; color:var(--accent); margin-bottom:.6em;
+      letter-spacing:-.2px;
+      text-align:center;
+      display:flex; flex-direction:column; align-items:center; gap:.1em;
     }
-    .comparison-table th, .comparison-table td {
-      padding:.7em; border-bottom:1px solid #f2f2f4; text-align:left;
-      font-size:1em; font-weight:400;
+    .aspect-svg {
+      width:54px; height:54px; margin-bottom:0.7em; opacity:.21;
+      filter:blur(1.5px);
+      animation:svgFloat 2.7s infinite alternate cubic-bezier(.7,.2,.6,1);
     }
-    .comparison-table th { color:var(--accent);}
-    /* --- FOOTER --- */
-    footer {
-      background:#f8fafd; color:var(--muted);
-      padding:2.5rem 1.2rem 1.2rem 1.2rem; margin-top:2.5rem;
-      font-size:.98em;
-      border-top:1.5px solid #ececec;
+    .aspect-desc {
+      font-size:1.05em; color:#333; text-align:center; margin-bottom:.4em;
+      line-height:1.45;
+    }
+    .aspect-emoji {
+      font-size:2em; color:var(--accent2); margin-bottom:.18em;
+      text-shadow:0 2px 12px #eaf1fd77;
+      animation:iconPulse2 2.7s infinite alternate cubic-bezier(.7,.2,.5,1);
+    }
+    /* ---- Footer ---- */
+    .footer {
+      background:var(--gradient-card); color:#888;
+      padding:2.3rem 1.2rem 2rem 1.2rem; margin-top:3rem;
+      font-size:1em; border-top:1.5px solid #ececec;
       display:flex; flex-wrap:wrap; gap:2rem; justify-content:space-between;
+      animation:footerfade .7s;
+      max-width:1100px; margin-left:auto; margin-right:auto;
+      border-radius:18px;
+      box-shadow:0 2px 18px #eaf1fd33;
     }
+    @keyframes footerfade { from{ opacity:0; transform:translateY(12px);} to{ opacity:1; transform:translateY(0);} }
     .footer-cols { display:flex; gap:2.5rem; flex:2; flex-wrap:wrap;}
     .footer-col { min-width:140px;}
-    .footer-col h5 { margin:0 0 .7em 0; color:var(--text); font-size:1.1em;}
+    .footer-col h5 { margin:0 0 .7em 0; color:#222; font-size:1.1em;}
     .footer-col ul { list-style:none; padding:0; margin:0;}
     .footer-col ul li { margin-bottom:.6em;}
-    .footer-col ul li a { color:var(--muted); text-decoration:none; transition:color .2s;}
-    .footer-col ul li a:hover { color:var(--accent);}
     .footer-legal { flex:1; text-align:right; min-width:180px;}
-    @media (max-width:850px) {
-      .features, .gallery { grid-template-columns:1fr;}
+    @media (max-width:1000px) {
+      .hero, .footer { max-width:98vw;}
+      .card-grid, .aspect-boxes, .comp-grid { max-width:98vw;}
+    }
+    @media (max-width:950px) {
+      .card-grid, .aspect-boxes, .comp-grid { grid-template-columns:1fr; flex-direction:column;}
       .footer-cols { flex-direction:column;}
       .footer-legal { text-align:left; margin-top:1.5em;}
-    }
-    /* --- ACCESSIBILITY --- */
-    a:focus, button:focus {
-      outline:2px solid var(--accent); outline-offset:2px;
-    }
-    /* --- MICROINTERACTIONS --- */
-    .photo-card:active { transform:scale(.98);}
-    /* --- HAMBURGER --- */
-    .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; }
-    .bar { width:25px; height:3px; background:var(--text); border-radius:2px;}
-    @media (max-width:650px) {
-      .navbar .nav-links { display:none; }
-      .navbar .icons { gap:.7rem;}
-      .hamburger { display:flex;}
-      .navbar.active .nav-links { display:flex; flex-direction:column; position:absolute; top:var(--nav-height); left:0; right:0; background:var(--background); box-shadow:0 2px 12px #eee7; z-index:998; padding:1.5em 0; }
+      .hero { padding:2.7rem 1rem 2rem 1rem;}
     }
   </style>
-  <script>
-    // Hamburger menu
-    document.addEventListener("DOMContentLoaded",function(){
-      const nav=document.querySelector('.navbar');
-      const ham=document.querySelector('.hamburger');
-      ham&&ham.addEventListener('click',()=>nav.classList.toggle('active'));
-    });
-  </script>
 </head>
 <body>
-  <!-- NAVBAR -->
-  <nav class="navbar" role="navigation" aria-label="Main Navigation">
-    <div class="logo" aria-label="Apple Logo"></div>
-    <div class="nav-links">
-      <a href="#" class="active">Home</a>
-      <a href="#">Gallery</a>
-      <a href="#">Compare</a>
-      <a href="#">Buy</a>
-      <a href="#">Support</a>
+  <!-- Floating BG SVGs -->
+  <svg class="bg-art bg-art1" viewBox="0 0 380 380"><ellipse cx="190" cy="190" rx="160" ry="120" fill="#0070f3"/></svg>
+  <svg class="bg-art bg-art2" viewBox="0 0 260 260"><rect x="50" y="90" width="160" height="70" rx="38" fill="#0070f3"/></svg>
+
+  <!-- HERO -->
+  <section class="hero">
+    <span class="hero-icon">🖼️</span>
+    <div class="hero-title">George's Photo Gallery</div>
+    <div class="hero-sub">A place for your memories.<br>Secure, beautiful, and permanent.<br>Fast, global, and effortless.</div>
+    <div class="hero-badges">
+      <span class="badge">☁️ Cloud Storage</span>
+      <span class="badge">🔐 Secure Admin</span>
+      <span class="badge">🖼️ Stunning UI</span>
+      <span class="badge">🛡️ Bulletproof</span>
+      <span class="badge">🌍 Global</span>
+      <span class="badge">💸 Free Tier</span>
     </div>
-    <div class="icons">
-      <img src="bag.svg" alt="Bag" class="icon" aria-label="Shopping Bag">
-      <img src="profile.svg" alt="Profile" class="icon" aria-label="Profile">
-      <div class="hamburger" aria-label="Menu" tabindex="0">
-        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
-      </div>
-    </div>
-  </nav>
-  
-  <!-- HERO SECTION -->
-  <section class="hero" aria-label="Hero Section">
-    <h1>George’s Photo Gallery</h1>
-    <div class="subtitle">Minimal. Modern. Beautiful. Your photos, safe forever.</div>
-    <a href="#" class="cta" aria-label="Buy Now">Buy</a>
+    <button class="hero-cta">Explore Gallery</button>
   </section>
 
-  <!-- FEATURES -->
-  <section class="features" aria-label="Key Features">
-    <div class="feature-card">
-      <h3>🖼 Visual Design</h3>
-      <ul>
-        <li>Minimalist, clean grid layout</li>
-        <li>Elegant typography, smooth animations</li>
-        <li>High-res, edge-to-edge imagery</li>
-      </ul>
+  <!-- Features -->
+  <div class="section-title">Experience the Features</div>
+  <div class="aspect-boxes">
+    <div class="aspect-box">
+      <div class="aspect-title"><span class="aspect-emoji">🎨</span>Visual Perfection</div>
+      <div class="aspect-desc">Minimal, contemporary grid. Edge-to-edge images, soft gradients, and interactive microinteractions make every photo pop.</div>
+      <svg class="aspect-svg" viewBox="0 0 54 54"><rect x="11" y="11" width="32" height="32" rx="11" fill="#0070f3"/></svg>
     </div>
-    <div class="feature-card">
-      <h3>🧭 Navigation & Responsiveness</h3>
-      <ul>
-        <li>Sticky top bar, mega-menu, structured footer</li>
-        <li>Adaptive, touch-friendly layouts for all devices</li>
-        <li>Optimized images, retina support</li>
-      </ul>
+    <div class="aspect-box">
+      <div class="aspect-title"><span class="aspect-emoji">☁️</span>Permanent Cloud Storage</div>
+      <div class="aspect-desc">Photos are safe from server restarts and redeployments, stored on Cloudinary with CDN for global speed. 25GB free.</div>
+      <svg class="aspect-svg" viewBox="0 0 54 54"><ellipse cx="27" cy="27" rx="18" ry="13" fill="#0070f3"/></svg>
     </div>
-    <div class="feature-card">
-      <h3>🧠 UX & Content</h3>
-      <ul>
-        <li>Intuitive, scroll-based storytelling</li>
-        <li>Confident, human copywriting</li>
-        <li>Benefit-focused product sections</li>
-      </ul>
+    <div class="aspect-box">
+      <div class="aspect-title"><span class="aspect-emoji">🔐</span>Secure Admin</div>
+      <div class="aspect-desc">Password-protected panel at <b>/admin</b> lets you upload, batch manage, and delete photos with instant feedback.<br>Password: <b>Hanshow99@</b></div>
+      <svg class="aspect-svg" viewBox="0 0 54 54"><rect x="17" y="8" width="20" height="38" rx="8" fill="#0070f3"/></svg>
+    </div>
+    <div class="aspect-box">
+      <div class="aspect-title"><span class="aspect-emoji">🛡️</span>Bulletproof Reliability</div>
+      <div class="aspect-desc">Fallback mechanisms and metadata backup mean your gallery never loses data. Admin-only controls keep things safe.</div>
+      <svg class="aspect-svg" viewBox="0 0 54 54"><ellipse cx="27" cy="27" rx="16" ry="16" fill="#0070f3"/></svg>
+    </div>
+    <div class="aspect-box">
+      <div class="aspect-title"><span class="aspect-emoji">💸</span>Free Tier Limits</div>
+      <div class="aspect-desc">Render: 750 hours/month, sleeps after 15 mins idle. Cloudinary: 25GB/month, global CDN. Always free for personal galleries.</div>
+      <svg class="aspect-svg" viewBox="0 0 54 54"><ellipse cx="27" cy="27" rx="22" ry="9" fill="#0070f3"/></svg>
+    </div>
+  </div>
+
+  <!-- How To Use -->
+  <div class="section-title">How To Use</div>
+  <div class="aspect-boxes">
+    <div class="aspect-box">
+      <div class="aspect-title"><span class="aspect-emoji">🌍</span>Public Gallery</div>
+      <div class="aspect-desc">
+        <b>1.</b> Browse all photos in a stunning grid.<br>
+        <b>2.</b> Click any image for a full-screen modal.<br>
+        <b>3.</b> Download with one click.
+      </div>
+      <svg class="aspect-svg" viewBox="0 0 54 54"><rect x="11" y="26" width="32" height="11" rx="5.5" fill="#0070f3"/></svg>
+    </div>
+    <div class="aspect-box">
+      <div class="aspect-title"><span class="aspect-emoji">🔑</span>Admin Panel</div>
+      <div class="aspect-desc">
+        <b>1.</b> Go to <b>/admin</b><br>
+        <b>2.</b> Login: <b>Hanshow99@</b><br>
+        <b>3.</b> Drag & drop upload, batch support<br>
+        <b>4.</b> Delete by hover & click
+      </div>
+      <svg class="aspect-svg" viewBox="0 0 54 54"><ellipse cx="44" cy="10" rx="6" ry="6" fill="#0070f3"/></svg>
+    </div>
+  </div>
+
+  <!-- Tech Details (as visual blocks) -->
+  <div class="section-title">The Tech Behind It</div>
+  <div class="aspect-boxes">
+    <div class="aspect-box">
+      <div class="aspect-title"><span class="aspect-emoji">💻</span>Frontend</div>
+      <div class="aspect-desc">
+        <span style="display:inline-block;margin-bottom:.3em;">⚡ <b>React.js SPA</b></span>
+        <span style="display:inline-block;margin-bottom:.3em;">🖼️ CSS Grid & Modal Viewer</span>
+        <span style="display:inline-block;">🔒 Admin login system</span>
+      </div>
+      <svg class="aspect-svg" viewBox="0 0 54 54"><rect x="10" y="10" width="34" height="12" rx="6" fill="#0070f3"/></svg>
+    </div>
+    <div class="aspect-box">
+      <div class="aspect-title"><span class="aspect-emoji">🖥️</span>Backend</div>
+      <div class="aspect-desc">
+        <span style="display:inline-block;margin-bottom:.3em;">🐍 <b>Flask API</b></span>
+        <span style="display:inline-block;margin-bottom:.3em;">🌐 CORS enabled</span>
+        <span style="display:inline-block;">☁️ Cloudinary SDK</span>
+      </div>
+      <svg class="aspect-svg" viewBox="0 0 54 54"><ellipse cx="27" cy="36" rx="18" ry="7" fill="#0070f3"/></svg>
+    </div>
+    <div class="aspect-box">
+      <div class="aspect-title"><span class="aspect-emoji">🗂️</span>Storage System</div>
+      <div class="aspect-desc">
+        <span style="display:inline-block;margin-bottom:.3em;">Cloudinary: Fast, secure</span>
+        <span style="display:inline-block;margin-bottom:.3em;">Base64 fallback</span>
+        <span style="display:inline-block;">JSON metadata backup</span>
+      </div>
+      <svg class="aspect-svg" viewBox="0 0 54 54"><rect x="20" y="20" width="14" height="24" rx="6" fill="#0070f3"/></svg>
+    </div>
+  </div>
+
+  <!-- Contact / Final Block -->
+  <section class="hero" style="background:var(--gradient-card);margin-bottom:0;">
+    <span class="hero-icon">✅</span>
+    <div class="hero-title" style="font-size:2.1rem;margin-bottom:0.5em;">Your photos are safe. Forever.</div>
+    <div class="hero-sub" style="font-size:1.08em;">
+      Beautiful. Modern. Fast. Secure.<br>
+      <strong>100% free to run</strong>
+    </div>
+    <div style="margin-top:2em; font-size:1.07em;">
+      <strong>Contact:</strong> georgehu67@gmail.com<br>
+      <strong>Admin Password:</strong> Hanshow99@
     </div>
   </section>
 
-  <!-- GALLERY / SHOWCASE -->
-  <section class="gallery" aria-label="Photo Gallery">
-    <div class="photo-card">
-      <img src="photo1.jpg" alt="Product close-up photo" loading="lazy" width="640" height="400">
-      <div class="photo-info">
-        <h4>Midnight</h4>
-        <p>Edge-to-edge brilliance. See every detail come alive. </p>
-      </div>
-    </div>
-    <div class="photo-card">
-      <img src="photo2.jpg" alt="Lifestyle photo" loading="lazy" width="640" height="400">
-      <div class="photo-info">
-        <h4>Starlight</h4>
-        <p>Light as air. Designed for every moment that matters. </p>
-      </div>
-    </div>
-    <div class="photo-card">
-      <img src="photo3.jpg" alt="Device render" loading="lazy" width="640" height="400">
-      <div class="photo-info">
-        <h4>Space Gray</h4>
-        <p>Power meets elegance. Crafted for your workflow.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- STORY / COMPARISON -->
-  <section class="story" aria-label="Product Comparison">
-    <h2>Compare Models</h2>
-    <table class="comparison-table" aria-label="Comparison Table">
-      <tr>
-        <th>Model</th><th>Color</th><th>Storage</th><th>Price</th>
-      </tr>
-      <tr>
-        <td>Pro</td><td>Midnight</td><td>1TB</td><td>$299</td>
-      </tr>
-      <tr>
-        <td>Air</td><td>Starlight</td><td>512GB</td><td>$199</td>
-      </tr>
-      <tr>
-        <td>Classic</td><td>Space Gray</td><td>256GB</td><td>$129</td>
-      </tr>
-    </table>
-    <div style="margin-top:1.5em;">
-      <a href="#" class="cta" aria-label="Learn More">Learn More</a>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
+  <footer class="footer">
     <div class="footer-cols">
       <div class="footer-col">
         <h5>Store</h5>
         <ul>
-          <li><a href="#">Shop</a></li>
-          <li><a href="#">Photo Gallery</a></li>
-          <li><a href="#">Gift Cards</a></li>
+          <li>Shop</li>
+          <li>Photo Gallery</li>
+          <li>Gift Cards</li>
         </ul>
       </div>
       <div class="footer-col">
         <h5>Support</h5>
         <ul>
-          <li><a href="#">Contact Us</a></li>
-          <li><a href="#">FAQ</a></li>
-          <li><a href="#">Privacy</a></li>
+          <li>Contact Us</li>
+          <li>FAQ</li>
+          <li>Privacy</li>
         </ul>
       </div>
       <div class="footer-col">
         <h5>About</h5>
         <ul>
-          <li><a href="#">Our Story</a></li>
-          <li><a href="#">Careers</a></li>
-          <li><a href="#">Legal</a></li>
+          <li>Our Story</li>
+          <li>Careers</li>
+          <li>Legal</li>
         </ul>
       </div>
     </div>
     <div class="footer-legal">
       &copy; 2025 George’s Gallery &mdash; All Rights Reserved.<br>
-      <a href="#" style="color:var(--muted);">Sitemap</a> &bull; <a href="#" style="color:var(--muted);">Privacy Policy</a>
+      Sitemap &bull; Privacy Policy
     </div>
   </footer>
 </body>
