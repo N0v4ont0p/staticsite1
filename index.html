@@ -20,7 +20,6 @@
       margin:0; padding:0; font-family:var(--font-main); background:var(--background); color:#222;
       font-size:19px; line-height:1.75; letter-spacing:.01em;
     }
-    /* ---- Floating Bg ---- */
     .bg-art {
       position:fixed; z-index:-1; pointer-events:none; opacity:.10;
       filter:blur(8px);
@@ -29,8 +28,6 @@
     .bg-art1 { left:-60px; top:-60px; width:380px; height:380px;}
     .bg-art2 { right:-40px; bottom:-40px; width:260px; height:260px; animation-delay:2s;}
     @keyframes bgfloat { from{transform:scale(1) rotate(0deg);} to{transform:scale(1.08) rotate(12deg);} }
-
-    /* ---- Hero ---- */
     .hero {
       background:var(--gradient-hero);
       border-radius:var(--radius);
@@ -79,17 +76,44 @@
       animation:fadeUpBadge .7s;
     }
     @keyframes fadeUpBadge { from{opacity:0;transform:translateY(18px);} to{opacity:1;transform:translateY(0);} }
-    .hero-cta {
-      display:inline-block; margin-top:1.7rem; font-size:1.14em;
-      background:var(--accent2); color:#fff; border-radius:13px; padding:1em 2.5em;
-      font-weight:700; letter-spacing:.02em; border:none; cursor:pointer; outline:none;
-      box-shadow:0 4px 22px #0070f342;
-      transition:background .2s, transform .2s;
-      animation:ctaFade 1.2s;
-      text-decoration:none;
+    .hero-cta-group {
+      display: flex;
+      justify-content: center;
+      gap: 1.2rem;
+      margin-top: 1.7rem;
+      flex-wrap: wrap;
     }
+    .hero-cta {
+      display: inline-block;
+      font-size: 1.14em;
+      background: var(--accent2);
+      color: #fff;
+      border-radius: 13px;
+      padding: 1em 2.5em;
+      font-weight: 700;
+      letter-spacing: .02em;
+      border: none;
+      cursor: pointer;
+      outline: none;
+      box-shadow: 0 4px 22px #0070f342;
+      transition: background .2s, transform .2s;
+      animation: ctaFade 1.2s;
+      text-decoration: none;
+    }
+    .hero-cta:hover { background: #0070f3; transform: scale(1.09);}
     @keyframes ctaFade { from{ opacity:0; transform:scale(.96);} to{ opacity:1; transform:scale(1);} }
-    .hero-cta:hover { background:#0070f3; transform:scale(1.09);}
+    .hero-cta.source {
+      background: #fff;
+      color: var(--accent);
+      border: 2px solid var(--accent);
+      box-shadow: 0 4px 22px #0070f320;
+    }
+    .hero-cta.source:hover {
+      background: var(--accent);
+      color: #fff;
+      border: 2px solid var(--accent);
+      transform: scale(1.09);
+    }
     /* ---- Section ---- */
     .section-title {
       font-size:2.1rem; font-weight:800; color:var(--accent);
@@ -99,45 +123,6 @@
       -webkit-text-fill-color:transparent;
       text-shadow:0 2px 12px #eaf1fd77;
     }
-    /* ---- Feature Cards ---- */
-    .card-grid {
-      display:grid; grid-template-columns:repeat(auto-fit,minmax(330px,1fr)); gap:2.7rem;
-      margin-bottom:2.5rem; max-width:1100px; margin-left:auto; margin-right:auto;
-    }
-    .card {
-      background:var(--gradient-card);
-      border-radius:22px;
-      box-shadow:0 8px 32px #0070f322,0 1px 12px #ececec;
-      padding:2.6rem 2rem 2.1rem 2rem;
-      display:flex; flex-direction:column; align-items:center; gap:1.2rem;
-      min-height:240px;
-      position:relative; overflow:hidden; z-index:1;
-      animation:cardPulse .95s cubic-bezier(.5,.2,.2,1);
-      animation-fill-mode:forwards;
-      opacity:0; transform:translateY(40px) scale(.97);
-      will-change:transform,opacity;
-      transition:box-shadow .18s, transform .17s, background .18s;
-      border:2.5px solid #f0f7ff;
-    }
-    @keyframes cardPulse { to { opacity:1; transform:translateY(0) scale(1);} }
-    .card:hover {
-      box-shadow:0 16px 44px #00c6fd21,0 2px 18px #ececec;
-      transform:scale(1.04) translateY(-2px);
-      background:linear-gradient(98deg,#f3f8ff 60%, #fff 100%);
-      border-color:var(--accent2);
-    }
-    .card .card-icon {
-      font-size:2.6em; margin-bottom:.1em; color:var(--accent2); opacity:.49;
-      animation:iconPulse2 2.7s infinite alternate cubic-bezier(.7,.2,.5,1);
-      display:inline-block;
-    }
-    @keyframes iconPulse2 { to { transform:scale(1.13) rotate(-10deg); } }
-    .card h2 {
-      font-size:1.21em; font-weight:700; margin:0 0 .3em 0; color:var(--accent);
-      letter-spacing:-.7px; margin-bottom:.1em;
-      text-shadow:0 2px 12px #eaf1fd77;
-    }
-    /* --- Aspect Box --- */
     .aspect-boxes {
       display:flex; flex-wrap:wrap; justify-content:center; gap:2.5rem; margin-bottom:2.2rem; margin-top:1rem;
     }
@@ -184,7 +169,6 @@
       text-shadow:0 2px 12px #eaf1fd77;
       animation:iconPulse2 2.7s infinite alternate cubic-bezier(.7,.2,.5,1);
     }
-    /* ---- Footer ---- */
     .footer {
       background:var(--gradient-card); color:#888;
       padding:2.3rem 1.2rem 2rem 1.2rem; margin-top:3rem;
@@ -211,6 +195,7 @@
       .footer-cols { flex-direction:column;}
       .footer-legal { text-align:left; margin-top:1.5em;}
       .hero { padding:2.7rem 1rem 2rem 1rem;}
+      .hero-cta-group { flex-direction:column; gap:.7rem; }
     }
   </style>
 </head>
@@ -232,7 +217,10 @@
       <span class="badge">🌍 Global</span>
       <span class="badge">💸 Free Tier</span>
     </div>
-    <a class="hero-cta" href="https://render23-efgc.onrender.com" target="_blank" rel="noopener">Explore Gallery</a>
+    <div class="hero-cta-group">
+      <a class="hero-cta" href="https://render23-efgc.onrender.com" target="_blank" rel="noopener">Explore Gallery</a>
+      <a class="hero-cta source" href="https://github.com/N0v4ont0p/render23" target="_blank" rel="noopener">Source Code</a>
+    </div>
   </section>
 
   <!-- Features -->
