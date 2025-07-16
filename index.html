@@ -857,16 +857,30 @@
     }
 
     if (isTouchDevice()) {
-      // On touch devices, hide custom cursor and native cursor
       cursor.style.display = 'none';
-      document.body.style.cursor = 'default'; // or 'auto' to show native pointer only when relevant
+      document.body.style.cursor = 'default';
     } else {
-  // On non-touch devices, show custom cursor and hide native
       document.body.style.cursor = 'none';
 
+      let mouseX = 0;
+      let mouseY = 0;
+      let currentX = 0;
+      let currentY = 0;
+      const speed = 0.15;
+
+      function animateCursor() {
+        currentX += (mouseX - currentX) * speed;
+        currentY += (mouseY - currentY) * speed;
+        cursor.style.transform = `translate3d(${currentX - 18}px, ${currentY - 18}px, 0)`;
+        requestAnimationFrame(animateCursor);
+      }
+
       document.addEventListener('mousemove', (e) => {
-        cursor.style.transform = `translate3d(${e.clientX - 18}px, ${e.clientY - 18}px, 0)`;
+        mouseX = e.clientX;
+        mouseY = e.clientY;
       });
+
+      animateCursor();
     }
   </script>
 </body>
