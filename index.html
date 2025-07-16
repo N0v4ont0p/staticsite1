@@ -547,15 +547,32 @@
       backdrop-filter: blur(10px) saturate(180%);
       -webkit-backdrop-filter: blur(10px) saturate(180%);
       border: 1px solid rgba(255, 255, 255, 0.3);
-      transition: transform 0.1s ease;
+      transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
       z-index: 9999;
       will-change: transform;
       transform: translate3d(0, 0, 0);
+      transform: translate3d(var(--cursor-x), var(--cursor-y), 0);
     }    
     body.dark .custom-cursor {
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid rgba(255, 255, 255, 0.2);
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    }
+    /* Keep custom cursor style smooth and consistent */
+    .custom-cursor {
+      cursor: none;
+    }
+
+/* Pointer cursor on interactive elements */
+    button, a, input, label {
+      cursor: pointer !important;
+    }
+
+/* Cursor effect on hover */
+    .custom-cursor.hovered {
+      background: rgba(0, 112, 243, 0.8);
+      transform: scale(1.5);
+      border-color: #0070f3;
     }
    
   </style>
@@ -850,6 +867,7 @@
     setVh();
 // Update on resize (when screen orientation changes or browser UI shows/hides)
     window.addEventListener('resize', setVh);
+    
     const cursor = document.querySelector('.custom-cursor');
 
     function isTouchDevice() {
@@ -871,7 +889,8 @@
       function animateCursor() {
         currentX += (mouseX - currentX) * speed;
         currentY += (mouseY - currentY) * speed;
-        cursor.style.transform = `translate3d(${currentX - 18}px, ${currentY - 18}px, 0)`;
+        cursor.style.setProperty('--cursor-x', `${currentX}px`);
+        cursor.style.setProperty('--cursor-y', `${currentY}px`);
         requestAnimationFrame(animateCursor);
       }
 
@@ -882,6 +901,17 @@
 
       animateCursor();
     }
+    // Select all interactive elements that should trigger cursor hover effect
+    const interactiveElements = document.querySelectorAll('button, a, input, label');
+
+    interactiveElements.forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.classList.add('hovered');
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.classList.remove('hovered');
+      });
+    });
   </script>
 </body>
 </html>
