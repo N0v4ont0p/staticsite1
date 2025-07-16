@@ -31,6 +31,20 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
   <style>
+
+    /* Light Theme Styles */
+    body.light {
+      background-color: #fff; /* Light background */
+      color: #333; /* Dark text */
+    }
+
+    /* Dark Theme Styles */
+    body.dark {
+      background-color: #121212; /* Dark background */
+      color: #fff; /* Light text */
+    }
+
+    
     body {
       cursor: none;
     }
@@ -858,6 +872,13 @@
       toggleButton.textContent = isDark ? '☀️ Light' : '🌙 Dark';
       localStorage.setItem('darkMode', isDark);
     });
+
+// Toggle listener
+    toggleButton.addEventListener('click', () => {
+      const isDark = document.body.classList.toggle('dark');
+      toggleButton.textContent = isDark ? '☀️ Light' : '🌙 Dark';
+      localStorage.setItem('darkMode', isDark);
+    });
     function setVh() {
   // Get 1% of the window inner height
       let vh = window.innerHeight * 0.01;
@@ -909,6 +930,20 @@
           cursor.classList.remove('hovered');  // Removes hovered class
         });
       });
+    // Detect system color scheme preference
+document.addEventListener('DOMContentLoaded', () => {
+  const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+  // Apply the corresponding theme class
+  if (prefersDarkMode) {
+    document.body.classList.add('dark');
+    document.body.classList.remove('light');
+  } else {
+    document.body.classList.add('light');
+    document.body.classList.remove('dark');
+  }
+});
+
 
   </script>
 </body>
