@@ -29,6 +29,20 @@
       --gradient-hero: linear-gradient(120deg,#eaf1fd 0%, #d4eafd 100%);
       --gradient-card: linear-gradient(120deg,#fff 0%, #eaf1fd 100%);
     }
+    @keyframes fadeZoom {
+      0% {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .hero-icon img {
+      animation: fadeZoom 1.2s ease-out both;
+    }
     html, body {
       height: 100%;
       margin: 0;
