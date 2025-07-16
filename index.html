@@ -570,12 +570,9 @@
 
 /* Cursor effect on hover */
     .custom-cursor.hovered {
-      background: rgba(0, 112, 243, 0.8);
-      transform: scale(1.5);
+      background: rgba(0, 112, 243, 0.8);  /* Change color for pointer effect */
+      transform: scale(1.5);  /* Enlarge the cursor */
       border-color: #0070f3;
-    }
-    button, a, input, label {
-      cursor: none !important;  /* Ensure custom cursor is always used */
     }
    
   </style>
@@ -887,15 +884,15 @@
       let mouseY = 0;
       let currentX = 0;
       let currentY = 0;
-      const speed = 0.05;
+      const speed = 0.2;
 
-      function animateCursor() {
-        currentX += (mouseX - currentX) * speed;
-        currentY += (mouseY - currentY) * speed;
-        cursor.style.setProperty('--cursor-x', `${currentX}px`);
-        cursor.style.setProperty('--cursor-y', `${currentY}px`);
-        requestAnimationFrame(animateCursor);
-      }
+    function animateCursor() {
+      currentX += (mouseX - currentX) * speed;
+      currentY += (mouseY - currentY) * speed;
+      cursor.style.setProperty('--cursor-x', `${currentX}px`);
+      cursor.style.setProperty('--cursor-y', `${currentY}px`);
+      requestAnimationFrame(animateCursor);
+    }
 
       document.addEventListener('mousemove', (e) => {
         mouseX = e.clientX;
@@ -906,13 +903,12 @@
     }
     // Select all interactive elements that should trigger cursor hover effect
     const interactiveElements = document.querySelectorAll('button, a, input, label');
-
     interactiveElements.forEach(el => {
       el.addEventListener('mouseenter', () => {
-        cursor.classList.add('hovered');
+        cursor.classList.add('hovered');  // Adds hovered class to the cursor
       });
       el.addEventListener('mouseleave', () => {
-        cursor.classList.remove('hovered');
+        cursor.classList.remove('hovered');  // Removes hovered class when leaving
       });
     });
   </script>
