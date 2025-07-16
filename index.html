@@ -20,6 +20,12 @@
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
   <link rel="preconnect" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
   <style>
+    .snap-container {
+      height: 100vh;
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
+    }
     :root {
       --accent: #0070f3;
       --accent2: #00c6fd;
@@ -88,12 +94,18 @@
       letter-spacing: .01em;
       overflow-x: hidden;
       scroll-behavior: smooth;
+      max-width: 100%;
     }
     body {
       background-color: var(--background);
     }
 
-    
+    .snap-container {
+      height: 100vh;
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
+    }
     .scene {
       min-height: 100vh;
       display: flex;
@@ -103,8 +115,10 @@
       box-sizing: border-box;
       z-index: 1;
       padding: 5vh 5vw 5vh 5vw;
-      overflow: visible;
       position: relative;
+      scroll-snap-align: start;
+      height: 100vh;
+      overflow: auto;
     }
     .scene-hero {
       background: var(--gradient-hero);
@@ -379,9 +393,65 @@
       .scene { padding: 0 2vw;}
     }
     @media (max-width: 600px) {
-      .hero-title { font-size: 2.1rem;}
-      .scene { padding: 0 .7vw;}
-      .scene-title { font-size: 1.2rem; }
+      .hero-cta-group {
+      flex-direction: column;
+      gap: 0.8rem;
+      width: 100%;
+      align-items: center;
+    }
+
+    .hero-cta {
+      width: 90%;
+      font-size: 1.05em;
+      padding: 0.9em 0;
+    }
+
+    .hero-icon img {
+      max-width: 90%;
+      height: auto;
+    }
+
+    .feature-card,
+    .howto-card,
+    .tech-card {
+      max-width: 95vw;
+      padding: 1.5rem 1rem;
+    }
+      .hero-title {
+        font-size: 2.1rem;
+        line-height: 1.2;
+      }
+
+      .hero-sub {
+        font-size: 1rem;
+        padding: 0 1.2rem;
+      }
+
+      .scene {
+        padding: 0 5vw;
+      }
+
+      .scene-title {
+        font-size: 1.4rem;
+      }
+
+      .feature-desc,
+      .howto-desc,
+      .tech-desc {
+        font-size: 1rem;
+        padding: 0 0.8rem;
+      }
+
+      .footer {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .footer-legal {
+        text-align: center;
+        margin-top: 1rem;
+      }
+    }
     }
     body {
       background-color: var(--background);
@@ -436,6 +506,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
   <!-- APPLE STYLE SCENES -->
+ <main class="snap-container">
   <section class="scene scene-hero">
     <div class="hero-content">
     <span class="hero-icon" style="margin-bottom: 0.5rem;">
@@ -562,7 +633,7 @@
       </div>
     </div>
   </section>
-
+ </main>  
   <footer class="footer">
     <div class="footer-cols">
       <div class="footer-col">
