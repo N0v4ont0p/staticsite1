@@ -642,13 +642,29 @@
         start: "top 99%",
         toggleActions: "play reverse play reverse"
       }
-    });
-    // 🌙 Dark Mode Toggle
+// 🌙 Auto Detect System Preference on First Visit
     const toggleButton = document.getElementById('darkToggle');
+
+// First time? Check system preference
+    if (localStorage.getItem('darkMode') === null) {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (prefersDark) {
+        document.body.classList.add('dark');
+        localStorage.setItem('darkMode', true);
+      } else {
+        localStorage.setItem('darkMode', false);
+      }
+    }
+
+// Apply saved preference
     if (localStorage.getItem('darkMode') === 'true') {
       document.body.classList.add('dark');
       toggleButton.textContent = '☀️ Light';
+    } else {
+      toggleButton.textContent = '🌙 Dark';
     }
+
+// Toggle listener
     toggleButton.addEventListener('click', () => {
       const isDark = document.body.classList.toggle('dark');
       toggleButton.textContent = isDark ? '☀️ Light' : '🌙 Dark';
