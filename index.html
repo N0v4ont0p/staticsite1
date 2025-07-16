@@ -39,6 +39,9 @@
       overflow-y: visible;
       scroll-behavior: smooth;
     }
+       * {
+      cursor: none !important;
+    }
   
     :root {
       --accent: #0070f3;
@@ -550,6 +553,8 @@
       border: 1px solid rgba(255, 255, 255, 0.3);
       transition: transform 0.1s ease;
       z-index: 9999;
+      will-change: transform;
+      transform: translate3d(0, 0, 0);
     }    
     body.dark .custom-cursor {
       background: rgba(255, 255, 255, 0.05);
@@ -700,9 +705,19 @@
 
   <script>
     const cursor = document.querySelector('.custom-cursor');
+    let mouseX = 0, mouseY = 0;
+
     document.addEventListener('mousemove', (e) => {
-      cursor.style.transform = `translate3d(${e.clientX - 18}px, ${e.clientY - 18}px, 0)`;
+      mouseX = e.clientX;
+      mouseY = e.clientY;
     });
+
+    function animateCursor() {
+      cursor.style.transform = `translate3d(${mouseX - 18}px, ${mouseY - 18}px, 0)`;
+      requestAnimationFrame(animateCursor);
+    }
+
+    animateCursor();
 
     
     gsap.registerPlugin(ScrollTrigger);
