@@ -36,20 +36,7 @@
       overflow-y: auto;
       scroll-behavior: smooth;
     }
-
-/* Enable scroll-snap only on mobile */
-    @media (max-width: 768px) {
-      .snap-container {
-        height: calc(var(--vh, 1vh) * 100);
-        overflow-y: scroll;
-        scroll-snap-type: y mandatory;
-        -webkit-overflow-scrolling: touch;
-      }
-
-      .scene {
-        scroll-snap-align: start;
-      }
-    }
+  
     :root {
       --accent: #0070f3;
       --accent2: #00c6fd;
@@ -522,7 +509,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
   <!-- APPLE STYLE SCENES -->
- <main class="snap-container">
+ <main>
   <section class="scene scene-hero">
     <div class="hero-content">
     <span class="hero-icon" style="margin-bottom: 0.5rem;">
