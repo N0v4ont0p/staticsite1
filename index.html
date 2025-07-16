@@ -35,7 +35,19 @@
       --background: #0d1117;
       --gradient-hero: linear-gradient(120deg,#1b1f27 0%, #0d1117 100%);
       --gradient-card: linear-gradient(120deg,#161b22 0%, #0d1117 100%);
-      color: #f0f6fc;
+      color: #fff;  /* change from #f0f6fc to #fff */
+    }
+    /* Also force all normal text in dark mode sections to white */
+    body.dark .feature-desc,
+    body.dark .howto-desc,
+    body.dark .tech-desc,
+    body.dark .contact-sub,
+    body.dark .contact-details {
+      color: #fff;
+    }
+    /* If any other text like .footer should be white too */
+    body.dark .footer {
+      color: #ccc;
     }
 
     @keyframes fadeZoom {
