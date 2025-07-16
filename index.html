@@ -33,7 +33,7 @@
   <style>
     .snap-container {
       height: auto;
-      overflow-y: auto;
+      overflow-y: visible;
       scroll-behavior: smooth;
     }
   
@@ -71,7 +71,10 @@
       background: #161b22;
       border-top: 1.5px solid #333;
     }
-
+    body.dark .scene:not(:first-of-type)::before {
+      background: linear-gradient(to right, #333, #444);
+    }
+    
     body.dark .footer h5 {
       color: #fff;
     }
@@ -103,7 +106,7 @@
       font-size: 19px;
       line-height: 1.75;
       letter-spacing: .01em;
-      overflow-x: hidden;
+      overflow-x: visible;
       scroll-behavior: smooth;
       max-width: 100%;
     }
@@ -111,17 +114,24 @@
       background-color: var(--background);
     }
     .scene {
-      min-height: 100vh;
-      height: calc(var(--vh, 1vh) * 100);
+      padding: 10vh 5vw;
+      box-sizing: border-box;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
       box-sizing: border-box;
       z-index: 1;
-      padding: 5vh 5vw 5vh 5vw;
       position: relative;
       overflow: visible;
+    }
+    .scene:not(:first-of-type)::before {
+      content: "";
+      display: block;
+      height: 1px;
+      width: 100%;
+      background: linear-gradient(to right, #d0d7e1, #f0f4f9);
+      margin-bottom: 4vh;
     }
     .scene-hero {
       padding-bottom: 30vh;
@@ -133,6 +143,8 @@
     .scene-tech,
     .scene-contact {
       background: var(--gradient-card);
+      padding-top: 12vh;
+      padding-bottom: 12vh;
     }
     .scene-title {
       font-size: 2.2rem;
@@ -398,11 +410,16 @@
       .scene { padding: 0 2vw;}
     }
     @media (max-width: 600px) {
+      .scene {
+        padding: 8vh 5vw;
+      }
       .hero-cta-group {
       flex-direction: column;
       gap: 0.8rem;
       width: 100%;
       align-items: center;
+      padding-top: 8vh;
+      padding-bottom: 8vh;
     }
 
     .hero-cta {
