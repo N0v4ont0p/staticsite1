@@ -29,6 +29,15 @@
       --gradient-hero: linear-gradient(120deg,#eaf1fd 0%, #d4eafd 100%);
       --gradient-card: linear-gradient(120deg,#fff 0%, #eaf1fd 100%);
     }
+    body.dark {
+      --accent: #4ea8ff;
+      --accent2: #00c6fd;
+      --background: #0d1117;
+      --gradient-hero: linear-gradient(120deg,#1b1f27 0%, #0d1117 100%);
+      --gradient-card: linear-gradient(120deg,#161b22 0%, #0d1117 100%);
+      color: #f0f6fc;
+    }
+
     @keyframes fadeZoom {
       0% {
         opacity: 0;
@@ -351,6 +360,18 @@
     <span class="hero-icon" style="margin-bottom: 0.5rem;">
     <img src="logo.png" alt="Logo" style="height: 260px; width: auto; margin-bottom: 0;" /> </span>
       <div class="hero-title">George's Photo Gallery</div>
+      <!-- 🌗 Dark Mode Toggle Button -->
+      <button id="darkToggle" style="
+        margin-top: 1rem;
+        background: var(--accent);
+        color: white;
+        border: none;
+        padding: 0.4em 1em;
+        border-radius: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+      ">🌙 Dark</button>
       <div class="hero-sub">A place for your memories.<br>Secure, beautiful, and permanent.<br>Fast, global, and effortless.</div>
       <div class="hero-cta-group">
         <a class="hero-cta" href="https://render23-efgc.onrender.com" target="_blank" rel="noopener">Explore Gallery</a>
@@ -610,6 +631,17 @@
         start: "top 99%",
         toggleActions: "play none none reverse"
       }
+    });
+    // 🌙 Dark Mode Toggle
+    const toggleButton = document.getElementById('darkToggle');
+    if (localStorage.getItem('darkMode') === 'true') {
+      document.body.classList.add('dark');
+      toggleButton.textContent = '☀️ Light';
+    }
+    toggleButton.addEventListener('click', () => {
+      const isDark = document.body.classList.toggle('dark');
+      toggleButton.textContent = isDark ? '☀️ Light' : '🌙 Dark';
+      localStorage.setItem('darkMode', isDark);
     });
   </script>
 </body>
