@@ -32,11 +32,23 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
   <style>
     .snap-container {
-      height: calc(var(--vh, 1vh) * 100);
-      overflow-y: scroll;
-      scroll-snap-type: y mandatory;
+      height: auto;
+      overflow-y: auto;
       scroll-behavior: smooth;
-      -webkit-overflow-scrolling: touch;
+    }
+
+/* Enable scroll-snap only on mobile */
+    @media (max-width: 768px) {
+      .snap-container {
+        height: calc(var(--vh, 1vh) * 100);
+        overflow-y: scroll;
+        scroll-snap-type: y mandatory;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .scene {
+        scroll-snap-align: start;
+      }
     }
     :root {
       --accent: #0070f3;
@@ -122,7 +134,6 @@
       z-index: 1;
       padding: 5vh 5vw 5vh 5vw;
       position: relative;
-      scroll-snap-align: start;
       overflow: visible;
     }
     .scene-hero {
