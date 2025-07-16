@@ -552,6 +552,7 @@
       will-change: transform;
       transform: translate3d(0, 0, 0);
       transform: translate3d(var(--cursor-x), var(--cursor-y), 0);
+      will-change: left, top; /* Add this to optimize performance */
     }    
     body.dark .custom-cursor {
       background: rgba(255, 255, 255, 0.05);
@@ -570,8 +571,8 @@
 
 /* Cursor effect on hover */
     .custom-cursor.hovered {
-      background: rgba(0, 112, 243, 0.8);  /* Change color for pointer effect */
-      transform: scale(1.5);  /* Enlarge the cursor */
+      background: rgba(0, 112, 243, 0.8);
+      transform: scale(1.5);  /* This is to make the cursor bigger */
       border-color: #0070f3;
     }
    
@@ -870,61 +871,42 @@
     
     const cursor = document.querySelector('.custom-cursor');
 
-    function isTouchDevice() {
-      return (('ontouchstart' in window) || (navigator.maxTouchPoints > 0));
+    let mouseX = 0;
+    let mouseY = 0;
+    let currentX = 0;
+    let currentY = 0;
+    const speed = 0.05;
+
+    function animateCursor() {
+      currentX += (mouseX - currentX) * speed;
+      currentY += (mouseY - currentY) * speed;
+    
+      cursor.style.left = `${currentX}px`;   // Update position directly
+      cursor.style.top = `${currentY}px`;    // Update position directly
+
+      requestAnimationFrame(animateCursor);
     }
 
-    if (isTouchDevice()) {
-      cursor.style.display = 'none';
-      document.body.style.cursor = 'none';
-    } else {
-      document.body.style.cursor = 'none';
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
 
-      let mouseX = 0;
-      let mouseY = 0;
-      let currentX = 0;
-      let currentY = 0;
-      const speed = 0.05;
+    animateCursor();
 
-      function animateCursor() {
-        currentX += (mouseX - currentX) * speed;
-        currentY += (mouseY - currentY) * speed;
-        cursor.style.setProperty('--cursor-x', `${currentX}px`);
-        cursor.style.setProperty('--cursor-y', `${currentY}px`);
-        requestAnimationFrame(animateCursor);
-      }
-
-      document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-      });
-
-      animateCursor();
 
       const interactiveElements = document.querySelectorAll('button, a, input, label');
 
       interactiveElements.forEach(el => {
         el.addEventListener('mouseenter', () => {
-          cursor.classList.add('hovered');  // Custom cursor becomes bigger on hover
-          document.body.style.cursor = 'none';  // Hide the native cursor
+          cursor.classList.add('hovered');  // Adds hovered class
         });
 
-       el.addEventListener('mouseleave', () => {
-          cursor.classList.remove('hovered');  // Custom cursor returns to normal size
-          document.body.style.cursor = 'none';  // Keep the native cursor hidden
+        el.addEventListener('mouseleave', () => {
+          cursor.classList.remove('hovered');  // Removes hovered class
         });
       });
-    }
-    // Select all interactive elements that should trigger cursor hover effect
-    const interactiveElements = document.querySelectorAll('button, a, input, label');
-    interactiveElements.forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        cursor.classList.add('hovered');  // Adds hovered class to the cursor
-      });
-      el.addEventListener('mouseleave', () => {
-        cursor.classList.remove('hovered');  // Removes hovered class when leaving
-      });
-    });
+
   </script>
 </body>
 </html>
