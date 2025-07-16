@@ -871,28 +871,31 @@
     
     const cursor = document.querySelector('.custom-cursor');
 
-    let mouseX = 0;
-    let mouseY = 0;
-    let currentX = 0;
-    let currentY = 0;
-    const speed = 0.05;
-
-    function animateCursor() {
-      currentX += (mouseX - currentX) * speed;
-      currentY += (mouseY - currentY) * speed;
-    
-      cursor.style.left = `${currentX}px`;   // Update position directly
-      cursor.style.top = `${currentY}px`;    // Update position directly
-
-      requestAnimationFrame(animateCursor);
-    }
+  
 
     document.addEventListener('mousemove', (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
+      cursor.style.left = `${mouseX}px`;
+      cursor.style.top = `${mouseY}px`;
     });
 
-    animateCursor();
+    document.addEventListener('mouseleave', () => {
+      cursor.style.display = 'none';  // Hide cursor when mouse leaves the page
+    });
+
+    document.addEventListener('mouseenter', () => {
+      cursor.style.display = 'block';  // Show cursor when mouse re-enters the page
+    });
+
+    document.addEventListener('blur', () => {
+     cursor.style.display = 'none';  // Hide cursor when window loses focus
+    });
+
+    document.addEventListener('focus', () => {
+      cursor.style.display = 'block';  // Show cursor when window gains focus
+    });
+
 
 
       const interactiveElements = document.querySelectorAll('button, a, input, label');
