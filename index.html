@@ -717,6 +717,11 @@
 
     animateCursor();
 
+
+    document.addEventListener('contextmenu', (e) => {
+      e.preventDefault();  // Disable right-click context menu
+    });
+
     
     gsap.registerPlugin(ScrollTrigger);
 
