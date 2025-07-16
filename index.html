@@ -31,6 +31,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
   <style>
+    body {
+      cursor: none;
+    }
     .snap-container {
       height: auto;
       overflow-y: visible;
@@ -534,12 +537,31 @@
       color: #00c6fd !important;
       text-decoration: underline;
     }    
+    .custom-cursor {
+      position: fixed;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      pointer-events: none;
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(10px) saturate(180%);
+      -webkit-backdrop-filter: blur(10px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      transition: transform 0.1s ease;
+      z-index: 9999;
+    }    
+    body.dark .custom-cursor {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    }
   </style>
 </head>
 <body>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-
+ <div class="custom-cursor"></div>
   <!-- APPLE STYLE SCENES -->
  <main>
   <section class="scene scene-hero">
@@ -677,6 +699,12 @@
   <button id="darkToggle">🌙 Dark</button>
 
   <script>
+    const cursor = document.querySelector('.custom-cursor');
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.transform = `translate3d(${e.clientX - 18}px, ${e.clientY - 18}px, 0)`;
+    });
+
+    
     gsap.registerPlugin(ScrollTrigger);
 
     // HERO: animate on scroll into view (not too early, not too late)
