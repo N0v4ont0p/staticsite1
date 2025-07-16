@@ -876,7 +876,7 @@
 
     if (isTouchDevice()) {
       cursor.style.display = 'none';
-      document.body.style.cursor = 'default';
+      document.body.style.cursor = 'none';
     } else {
       document.body.style.cursor = 'none';
 
@@ -886,20 +886,34 @@
       let currentY = 0;
       const speed = 0.05;
 
-    function animateCursor() {
-      currentX += (mouseX - currentX) * speed;
-      currentY += (mouseY - currentY) * speed;
-      cursor.style.setProperty('--cursor-x', `${currentX}px`);
-      cursor.style.setProperty('--cursor-y', `${currentY}px`);
-      requestAnimationFrame(animateCursor);
-    }
+      function animateCursor() {
+        currentX += (mouseX - currentX) * speed;
+        currentY += (mouseY - currentY) * speed;
+        cursor.style.setProperty('--cursor-x', `${currentX}px`);
+        cursor.style.setProperty('--cursor-y', `${currentY}px`);
+        requestAnimationFrame(animateCursor);
+      }
 
       document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-    });
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      });
 
       animateCursor();
+
+      const interactiveElements = document.querySelectorAll('button, a, input, label');
+
+      interactiveElements.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          cursor.classList.add('hovered');  // Custom cursor becomes bigger on hover
+          document.body.style.cursor = 'none';  // Hide the native cursor
+        });
+
+       el.addEventListener('mouseleave', () => {
+          cursor.classList.remove('hovered');  // Custom cursor returns to normal size
+          document.body.style.cursor = 'none';  // Keep the native cursor hidden
+        });
+      });
     }
     // Select all interactive elements that should trigger cursor hover effect
     const interactiveElements = document.querySelectorAll('button, a, input, label');
