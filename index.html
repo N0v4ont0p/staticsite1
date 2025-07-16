@@ -383,24 +383,41 @@
       .scene { padding: 0 .7vw;}
       .scene-title { font-size: 1.2rem; }
     }
-                {
+    #darkToggle {
       position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: var(--accent);
+      bottom: 28px;
+      right: 28px;
+      padding: 0.55em 1.3em;
+      font-size: 1rem;
+      font-weight: 600;
       color: white;
-      border: none;
-      padding: 0.6em 1.2em;
       border-radius: 50px;
-      font-weight: bold;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(18px) saturate(160%);
+      -webkit-backdrop-filter: blur(18px) saturate(160%);
+      box-shadow:
+        0 4px 30px rgba(0, 0, 0, 0.3),
+        inset 0 0 0.3px rgba(255, 255, 255, 0.2);
+      z-index: 9999;
       cursor: pointer;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.2);
-      z-index: 1000;
-      transition: transform 0.2s ease, background 0.3s ease;
+      transition: all 0.3s ease;
+      font-family: 'Inter', sans-serif;
+      letter-spacing: 0.02em;
     }
+
+    body.dark #darkToggle {
+      background: rgba(255, 255, 255, 0.08);
+      color: white;
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
     #darkToggle:hover {
-      transform: scale(1.07);
-      background: var(--accent2);
+      transform: scale(1.06);
+      background: rgba(255, 255, 255, 0.13);
+      box-shadow:
+        0 6px 36px rgba(0, 0, 0, 0.35),
+        inset 0 0 0.5px rgba(255, 255, 255, 0.3);
     }
   </style>
 </head>
@@ -415,7 +432,6 @@
     <img src="logo.png" alt="Logo" style="height: 260px; width: auto; margin-bottom: 0;" /> </span>
       <div class="hero-title">George's Photo Gallery</div>
       <!-- 🌗 Dark Mode Toggle Button -->
-      <button id="darkToggle">🌙 Dark</button>
       <div class="hero-sub">A place for your memories.<br>Secure, beautiful, and permanent.<br>Fast, global, and effortless.</div>
       <div class="hero-cta-group">
         <a class="hero-cta" href="https://render23-efgc.onrender.com" target="_blank" rel="noopener">Explore Gallery</a>
@@ -569,6 +585,8 @@
       Sitemap &bull; Privacy Policy
     </div>
   </footer>
+
+  <button id="darkToggle">🌙 Dark</button>
 
   <script>
     gsap.registerPlugin(ScrollTrigger);
