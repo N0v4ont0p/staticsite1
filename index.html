@@ -863,6 +863,7 @@
       document.body.classList.add('dark');
       toggleButton.textContent = '☀️ Light';
     } else {
+      document.body.classList.add('light');
       toggleButton.textContent = '🌙 Dark';
     }
 
@@ -873,12 +874,7 @@
       localStorage.setItem('darkMode', isDark);
     });
 
-// Toggle listener
-    toggleButton.addEventListener('click', () => {
-      const isDark = document.body.classList.toggle('dark');
-      toggleButton.textContent = isDark ? '☀️ Light' : '🌙 Dark';
-      localStorage.setItem('darkMode', isDark);
-    });
+
     function setVh() {
   // Get 1% of the window inner height
       let vh = window.innerHeight * 0.01;
