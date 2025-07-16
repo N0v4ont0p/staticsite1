@@ -884,7 +884,7 @@
       let mouseY = 0;
       let currentX = 0;
       let currentY = 0;
-      const speed = 0.2;
+      const speed = 0.05;
 
     function animateCursor() {
       currentX += (mouseX - currentX) * speed;
@@ -895,9 +895,9 @@
     }
 
       document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-      });
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
 
       animateCursor();
     }
