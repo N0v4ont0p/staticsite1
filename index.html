@@ -749,7 +749,7 @@
   <button id="darkToggle">🌙 Dark</button>
 
   <script>
-
+    const cursor = document.querySelector('.custom-cursor');
     let mouseX = 0;
     let mouseY = 0;
     (function detectTouchEarly() {
@@ -761,11 +761,6 @@
       })();
 
 
-    if (toggleButton) {
-  // run the logic
-    } else {
-      console.warn("⚠️ Dark toggle button not found!");
-    }
 
 
 
@@ -921,64 +916,32 @@
 // Update on resize (when screen orientation changes or browser UI shows/hides)
     window.addEventListener('resize', setVh);
     
-    const cursor = document.querySelector('.custom-cursor');
-
-  
-
-    document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      cursor.style.left = `${mouseX}px`;
-      cursor.style.top = `${mouseY}px`;
-    });
-
-    document.addEventListener('mouseleave', () => {
-      cursor.style.display = 'none';  // Hide cursor when mouse leaves the page
-    });
-
-    document.addEventListener('mouseenter', () => {
-      cursor.style.display = 'block';  // Show cursor when mouse re-enters the page
-    });
-
-    document.addEventListener('blur', () => {
-     cursor.style.display = 'none';  // Hide cursor when window loses focus
-    });
-
-    document.addEventListener('focus', () => {
-      cursor.style.display = 'block';  // Show cursor when window gains focus
-    });
 
 
 
       const interactiveElements = document.querySelectorAll('button, a, input, label');
 
-      interactiveElements.forEach(el => {
-        el.addEventListener('mouseenter', () => {
-          cursor.classList.add('hovered');  // Adds hovered class
-        });
 
-        el.addEventListener('mouseleave', () => {
-          cursor.classList.remove('hovered');  // Removes hovered class
-        });
-      });
+
+
     document.addEventListener('DOMContentLoaded', () => {
       const darkToggle = document.getElementById('darkToggle');
+      const cursor = document.querySelector('.custom-cursor');
 
-  // Step 1: Auto-detect only on first visit
+  // DARK MODE SETUP
       if (localStorage.getItem('darkMode') === null) {
         const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         localStorage.setItem('darkMode', systemPrefersDark);
       }
 
-  // Step 2: Apply saved preference
       const isDarkMode = localStorage.getItem('darkMode') === 'true';
       document.body.classList.toggle('dark', isDarkMode);
       document.body.classList.toggle('light', !isDarkMode);
-
-  // Step 3: Update toggle label
       darkToggle.textContent = isDarkMode ? '☀️ Light' : '🌙 Dark';
 
-  // Step 4: Add toggle button logic
+
+      darkToggle.textContent = isDarkMode ? '☀️ Light' : '🌙 Dark';
+ 
       darkToggle.addEventListener('click', () => {
         const isCurrentlyDark = document.body.classList.contains('dark');
         document.body.classList.toggle('dark', !isCurrentlyDark);
@@ -986,7 +949,41 @@
         localStorage.setItem('darkMode', !isCurrentlyDark);
         darkToggle.textContent = isCurrentlyDark ? '🌙 Dark' : '☀️ Light';
       });
+
+  // ✅ CUSTOM CURSOR LOGIC — FIXED
+      document.addEventListener('mousemove', (e) => {
+        cursor.style.left = `${e.clientX}px`;
+        cursor.style.top = `${e.clientY}px`;
+      });
+
+      document.addEventListener('mouseleave', () => {
+        cursor.style.display = 'none';
+      });
+
+      document.addEventListener('mouseenter', () => {
+        cursor.style.display = 'block';
+      });
+
+      document.addEventListener('blur', () => {
+        cursor.style.display = 'none';
+      });
+
+      document.addEventListener('focus', () => {
+        cursor.style.display = 'block';
+      });
+
+      const interactiveElements = document.querySelectorAll('button, a, input, label');
+
+      interactiveElements.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          cursor.classList.add('hovered');
+        });
+        el.addEventListener('mouseleave', () => {
+          cursor.classList.remove('hovered');
+        });
+      });
     });
+   
 
     
   </script>
