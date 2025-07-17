@@ -1003,8 +1003,8 @@
 
     function animateCursor() {
   // Smooth follow (tweak the 0.15 value for smoothness)
-      cursorX += (mouseX - cursorX) * 0.3;
-      cursorY += (mouseY - cursorY) * 0.3;
+      cursorX += (mouseX - cursorX) * 0.6;
+      cursorY += (mouseY - cursorY) * 0.6;
 
       customCursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
 
