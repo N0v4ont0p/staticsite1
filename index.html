@@ -623,8 +623,6 @@
     }
 
 /* Shimmer effect: using a pseudo-element */
-      content: '';
-      position: absolute;
       top: -150%;
       left: -100%;
       width: 300%;
@@ -989,7 +987,8 @@
     
     const cursor = document.querySelector('.custom-cursor');
 
-  
+    let mouseX = 0;
+    let mouseY = 0;
 
     document.addEventListener('mousemove', (e) => {
       mouseX = e.clientX;
