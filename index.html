@@ -589,6 +589,44 @@
       transform: scale(1.5);  /* This is to make the cursor bigger */
       border-color: #0070f3;
     }
+
+
+    /* === 🧊 Frosted Glass Scrollbar === */
+    body::-webkit-scrollbar {
+      width: 14px; /* Wider scrollbar */
+      background: transparent;
+    }
+
+    body::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05); /* subtle frosted effect */
+      backdrop-filter: blur(12px) saturate(180%);
+      -webkit-backdrop-filter: blur(12px) saturate(180%);
+      border-radius: 12px;
+    }
+
+    body::-webkit-scrollbar-thumb {
+      background: rgba(0, 112, 243, 0.4); /* accent blue */
+      border-radius: 12px;
+      border: 3px solid transparent;
+      background-clip: padding-box;
+      transition: background 0.3s ease;
+    }
+
+    body::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 112, 243, 0.6); /* darker on hover */
+    }
+
+/* Dark mode adaptation */
+    body.dark::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    body.dark::-webkit-scrollbar-thumb {
+      background: rgba(0, 112, 243, 0.35);
+    }
+    body.dark::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 112, 243, 0.55);
+    }
    
   </style>
 </head>
