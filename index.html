@@ -922,9 +922,10 @@
       darkToggle.addEventListener('click', () => {
         const currentlyDark = document.body.classList.contains('dark');
         document.body.classList.toggle('dark', !currentlyDark);
-        document.body.classList.toggle('light', currentlyDark);
+        document.body.classList.toggle('light', !currentlyDark);
         localStorage.setItem('darkMode', (!currentlyDark).toString());
         darkToggle.textContent = currentlyDark ? '🌙 Dark' : '☀️ Light';
+        document.body.classList.toggle('light', !document.body.classList.contains('dark'));
       });
       
   // ✅ CUSTOM CURSOR LOGIC — FIXED
