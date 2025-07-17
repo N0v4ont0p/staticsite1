@@ -443,8 +443,9 @@
     }
 
     .hero-icon img {
-      max-width: 90%;
+      max-width: 260px;
       height: auto;
+      width: auto;
     }
 
     .feature-card,
@@ -590,6 +591,32 @@
       transform: scale(1.5);  /* This is to make the cursor bigger */
       border-color: #0070f3;
     }
+
+
+    .hero-cta {
+      width: auto !important;
+      max-width: 300px;
+      text-align: center;
+    }
+
+    .hero-badges {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .badge {
+      width: auto !important;
+      max-width: 220px;
+      text-align: center;
+    }
+
+/* Prevent full-width on small screens */
+    @media (min-width: 601px) {
+      .hero-cta,
+      .badge {
+        width: auto !important;
+      }
+    }
    
   </style>
 </head>
@@ -605,7 +632,7 @@
     <img
       src="logo.png"
       alt="Logo"
-      style="height: auto; width: 100%; max-width: 260px; margin-bottom: 0;" />
+      style="height: auto; width: auto; max-width: 260px; margin-bottom: 0;"
 
       <div class="hero-title">George's Photo Gallery</div>
       <!-- 🌗 Dark Mode Toggle Button -->
