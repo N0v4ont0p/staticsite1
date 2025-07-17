@@ -22,11 +22,11 @@
   <!-- Standard Favicon -->
   <!-- SVG for modern browsers -->
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
   <!-- Apple Touch Icon -->
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <!-- Web App Manifest -->
   <link rel="manifest" href="site.webmanifest">
-  <link rel="icon" href="/favicon.ico" type="image/x-icon">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
@@ -47,6 +47,7 @@
     
     body {
       cursor: none;
+      transition: background-color 0.4s ease, color 0.4s ease;
     }
     .snap-container {
       height: auto;
@@ -488,9 +489,6 @@
       }
     }
     }
-    body {
-      transition: background-color 0.4s ease, color 0.4s ease;
-    }  
     #darkToggle {
       position: fixed;
       bottom: 28px;
@@ -588,6 +586,18 @@
       background: rgba(0, 112, 243, 0.8);
       transform: scale(1.5);  /* This is to make the cursor bigger */
       border-color: #0070f3;
+    }
+
+    .touch-device {
+      cursor: none !important;
+    }
+
+    .touch-device .custom-cursor {
+      display: none !important;
+    }
+
+    .touch-device body {
+      cursor: default !important;
     }
    
   </style>
@@ -731,6 +741,14 @@
   <button id="darkToggle">🌙 Dark</button>
 
   <script>
+
+    (function detectTouchEarly() {
+        const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        if (isTouch) {
+          document.documentElement.classList.add('touch-device');
+          document.body.classList.add('touch-device');
+          }
+      })();
 
 
 
@@ -927,20 +945,20 @@
         });
       });
     // Detect system color scheme preference
-document.addEventListener('DOMContentLoaded', () => {
-  const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.addEventListener('DOMContentLoaded', () => {
+      const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
   // Apply the corresponding theme class
-  if (prefersDarkMode) {
-    document.body.classList.add('dark');
-    document.body.classList.remove('light');
-  } else {
-    document.body.classList.add('light');
-    document.body.classList.remove('dark');
-  }
-});
+      if (prefersDarkMode) {
+        document.body.classList.add('dark');
+        document.body.classList.remove('light');
+      } else {
+        document.body.classList.add('light');
+        document.body.classList.remove('dark');
+      }
+    });
 
-
+    
   </script>
 </body>
 </html>
