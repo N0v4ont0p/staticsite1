@@ -1039,6 +1039,27 @@
       }
     });
 
+    document.addEventListener('DOMContentLoaded', () => {
+  // Get your custom cursor element by its class or ID
+      const cursor = document.querySelector('.custom-cursor');
+
+  // Set initial position to center of screen
+      let mouseX = window.innerWidth / 2;
+      let mouseY = window.innerHeight / 2;
+
+      cursor.style.left = `${mouseX}px`;
+      cursor.style.top = `${mouseY}px`;
+
+  // Update cursor position on mouse move
+      document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        cursor.style.left = `${mouseX}px`;
+        cursor.style.top = `${mouseY}px`;
+      });
+    });
+
+
 
   </script>
 </body>
