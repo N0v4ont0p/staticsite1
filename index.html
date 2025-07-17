@@ -732,6 +732,27 @@
 
   <script>
 
+    document.addEventListener('DOMContentLoaded', () => {
+    // Check if the device supports touch events
+      const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+    // If it's a touch device, disable the custom cursor
+      if (isTouchDevice) {
+        document.body.classList.add('touch-device'); // Add class to indicate it's a touch device
+      } else {
+        document.body.classList.add('non-touch-device');
+      }
+
+    // Add styles to hide the custom cursor on touch devices
+      const style = document.createElement('style');
+      style.innerHTML = `
+        body.touch-device .custom-cursor {
+          display: none; /* Hides the custom cursor on touch devices */
+        }
+      `;
+      document.head.appendChild(style);
+    });
+
 
 
     document.addEventListener('contextmenu', (e) => {
