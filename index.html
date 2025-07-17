@@ -512,7 +512,6 @@
         0 4px 30px rgba(0, 0, 0, 0.3),
         inset 0 0 0.3px rgba(255, 255, 255, 0.2);
       z-index: 9999;
-      cursor: none;
       transition: all 0.3s ease;
       font-family: 'Inter', sans-serif;
       letter-spacing: 0.02em;
@@ -563,7 +562,8 @@
       z-index: 9999;
       will-change: transform;
       transform: translate3d(0, 0, 0);
-      transform: translate3d(var(--cursor-x), var(--cursor-y), 0);
+      left: 0;
+      top: 0;
       will-change: left, top; /* Add this to optimize performance */
     }    
     body.dark .custom-cursor {
@@ -750,6 +750,8 @@
 
   <script>
 
+    let mouseX = 0;
+    let mouseY = 0;
     (function detectTouchEarly() {
         const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
         if (isTouch) {
