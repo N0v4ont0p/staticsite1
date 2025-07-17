@@ -625,6 +625,12 @@
       font-size: 18px !important;
       z-index: 99999 !important;
     }  
+    #darkToggle {
+      display: block !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      z-index: 99999 !important;
+    }
    
   </style>
 </head>
@@ -770,13 +776,13 @@
     const cursor = document.querySelector('.custom-cursor');
     let mouseX = 0;
     let mouseY = 0;
-    (function detectTouchEarly() {
-        const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-        if (isTouch) {
-          document.documentElement.classList.add('touch-device');
-          document.body.classList.add('touch-device');
-          }
-      })();
+  / (function detectTouchEarly() {
+    // const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  //   if (isTouch) {
+     //   document.documentElement.classList.add('touch-device');
+     //   document.body.classList.add('touch-device');
+       // }
+   // })();
 
 
 
