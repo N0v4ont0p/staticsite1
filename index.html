@@ -568,6 +568,10 @@
       transform: translate3d(var(--cursor-x), var(--cursor-y), 0);
       will-change: left, top; /* Add this to optimize performance */
     }    
+    .custom-cursor.clicking {
+      width: 60px;
+      height: 60px;
+    }
     body.dark .custom-cursor {
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid rgba(255, 255, 255, 0.2);
@@ -812,6 +816,16 @@
 
   <script>
 
+    const cursor = document.querySelector('.custom-cursor');
+
+    document.addEventListener('mousedown', () => {
+      cursor.classList.add('clicking');
+    });
+
+    document.addEventListener('mouseup', () => {
+      cursor.classList.remove('clicking');
+    });
+    
     document.addEventListener('DOMContentLoaded', () => {
     // Check if the device supports touch events
       const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
