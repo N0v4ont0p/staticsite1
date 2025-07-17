@@ -32,6 +32,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
   <style>
 
+    html, body, * {
+      cursor: none !important;
+    }
+
     /* Light Theme Styles */
     body.light {
       background-color: #fff; /* Light background */
@@ -631,6 +635,39 @@
       visibility: visible !important;
       z-index: 99999 !important;
     }
+
+    #darkToggle {
+      position: fixed;
+      bottom: 2.5rem;
+      right: 2.5rem;
+      width: 56px;
+      height: 56px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      color: white;
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 99999;
+      transition: all 0.3s ease;
+    }
+
+    #darkToggle:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.05);
+    }
+
+    body.dark {
+      background-color: #0f0f0f;
+      color: #fff;
+    }
+
    
   </style>
 </head>
@@ -974,6 +1011,13 @@
         });
       });
     });
+
+    const darkToggle = document.getElementById("darkToggle");
+    darkToggle.addEventListener("click", () => {
+      document.body.classList.toggle("dark");
+      darkToggle.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
+    });
+ 
    
 
     
