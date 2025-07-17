@@ -810,7 +810,6 @@
   <button id="darkToggle">🌙 Dark</button>
 
   <script>
-    const cursor = document.querySelector('.custom-cursor');
     let mouseX = 0;
     let mouseY = 0;
   / (function detectTouchEarly() {
@@ -1000,7 +999,7 @@
         cursor.style.display = 'block';
       });
 
-      const interactiveElements = document.querySelectorAll('button, a, input, label');
+
 
       interactiveElements.forEach(el => {
         el.addEventListener('mouseenter', () => {
@@ -1012,11 +1011,9 @@
       });
     });
 
-    const darkToggle = document.getElementById("darkToggle");
-    darkToggle.addEventListener("click", () => {
-      document.body.classList.toggle("dark");
-      darkToggle.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
-    });
+    const cursor = document.querySelector('.custom-cursor');
+
+
  
    
 
