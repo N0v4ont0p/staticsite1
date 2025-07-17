@@ -590,42 +590,53 @@
       border-color: #0070f3;
     }
 
-
-    /* === 🧊 Frosted Glass Scrollbar === */
-    body::-webkit-scrollbar {
-      width: 14px; /* Wider scrollbar */
-      background: transparent;
+    /* 🧊 Liquid Glass Scrollbar with Hover Animation */
+    ::-webkit-scrollbar {
+      width: 14px;
+      height: 14px;
+      transition: opacity 0.4s ease, width 0.3s ease;
+      opacity: 0;
     }
 
-    body::-webkit-scrollbar-track {
-      background: rgba(255, 255, 255, 0.05); /* subtle frosted effect */
-      backdrop-filter: blur(12px) saturate(180%);
-      -webkit-backdrop-filter: blur(12px) saturate(180%);
+    ::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px) saturate(180%);
       border-radius: 12px;
+      transition: background 0.4s ease;
     }
 
-    body::-webkit-scrollbar-thumb {
-      background: rgba(0, 112, 243, 0.4); /* accent blue */
-      border-radius: 12px;
-      border: 3px solid transparent;
-      background-clip: padding-box;
-      transition: background 0.3s ease;
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(30px) saturate(180%);
+      border-radius: 20px;
+      border: 3px solid rgba(255, 255, 255, 0.15);
+      background-clip: content-box;
+      transition: background 0.4s ease, border 0.4s ease;
     }
 
-    body::-webkit-scrollbar-thumb:hover {
-      background: rgba(0, 112, 243, 0.6); /* darker on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 120, 255, 0.3);
+      border: 3px solid rgba(0, 120, 255, 0.2);
     }
 
-/* Dark mode adaptation */
-    body.dark::-webkit-scrollbar-track {
-      background: rgba(255, 255, 255, 0.03);
+/* Show scrollbar on hover */
+    body:hover ::-webkit-scrollbar {
+      opacity: 1;
     }
 
-    body.dark::-webkit-scrollbar-thumb {
-      background: rgba(0, 112, 243, 0.35);
+/* Dark mode support */
+    body.dark ::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.04);
     }
-    body.dark::-webkit-scrollbar-thumb:hover {
-      background: rgba(0, 112, 243, 0.55);
+
+    body.dark ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+      border: 3px solid rgba(255, 255, 255, 0.08);
+    }
+
+    body.dark ::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 120, 255, 0.25);
+      border: 3px solid rgba(0, 120, 255, 0.18);
     }
    
   </style>
