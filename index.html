@@ -34,14 +34,15 @@
 
     /* Light Theme Styles */
     body.light {
-      background-color: #fff; /* Light background */
-      color: #333; /* Dark text */
+      background: linear-gradient(135deg, #e0f7fa, #ffffff);
+      color: #333;
     }
 
     /* Dark Theme Styles */
     body.dark {
-      background-color: #121212; /* Dark background */
+      background: linear-gradient(135deg, #121212, #1d1d1d); 
       color: #fff; /* Light text */
+      background-size: 100% 100%;
     }
 
 
@@ -148,7 +149,8 @@
     .scene-hero {
       padding-bottom: 10vh;
       z-index: 1;
-      background: var(--gradient-hero);
+      background: linear-gradient(135deg, #e0f7fa, #ffffff);
+      background-size: 100% 100%;
     }
     .scene-features,
     .scene-howto,
@@ -488,6 +490,7 @@
     }
     body {
       transition: background-color 0.4s ease, color 0.4s ease;
+      transition: background 0.4s ease, color 0.4s ease;
     }  
     #darkToggle {
       position: fixed;
