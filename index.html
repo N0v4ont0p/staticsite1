@@ -73,6 +73,7 @@
     body.dark .howto-desc,
     body.dark .tech-desc,
     body.dark .contact-sub,
+    body.dark .darktoggle
     body.dark .contact-details {
       color: #fff;
     }
@@ -520,7 +521,7 @@
 
     body.dark #darkToggle {
       background: rgba(0, 0, 0, 0.3);
-      color: white;
+      color: #fff;
       border-color: rgba(255, 255, 255, 0.3);
     }
 
@@ -531,16 +532,12 @@
         0 6px 36px rgba(0, 0, 0, 0.35),
         inset 0 0 0.5px rgba(255, 255, 255, 0.3);
     }
-
-    body.dark .footer * {
-      animation: none !important;  /* Disable animation in dark mode */
-    }
-
      
     body.dark .footer {
       background: #121212; /* Dark background for the entire footer */
       color: #ddd; /* Light text color for footer in dark mode */
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4); /* Optional: subtle shadow */
+      animation: none !important;  /* Disable animation in dark mode */
     }
     body.dark .footer a,
     body.dark .footer ul li {
