@@ -711,6 +711,24 @@
     button, a, input, label {
       cursor: none !important;
     }
+
+    body, .large-pill, .small-pill {
+      cursor: none !important;
+    }
+
+  /* Additional styles for the custom cursor */
+    .custom-cursor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 30px; /* adjust size as needed */
+      height: 30px; /* adjust size as needed */
+      background: rgba(255, 255, 255, 0.7); /* frosted glass effect */
+      border-radius: 50%;
+      pointer-events: none; /* Prevent cursor from interfering with clicks */
+      transition: transform 0.1s ease;
+      transform: translate(-50%, -50%);
+    }
    
   </style>
   <div class="language-toggle" id="languageToggle">
@@ -1208,6 +1226,36 @@
       window.addEventListener('DOMContentLoaded', () => {
         const userLang = navigator.language.includes('zh') ? 'zh' : 'en';
         switchLanguage(userLang);
+      });
+      
+      window.addEventListener('load', () => {
+    // Bind the native cursor to the custom cursor and hide native cursor
+        document.body.style.cursor = 'none'; // Hides native cursor immediately on load
+
+    // Set up the custom cursor tracking as before
+        const customCursor = document.createElement('div');
+        customCursor.classList.add('custom-cursor');
+        document.body.appendChild(customCursor);
+
+        let cursorX = 0, cursorY = 0;
+        let mouseX = 0, mouseY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+          mouseX = e.clientX;
+          mouseY = e.clientY;
+        });
+  
+        function updateCursor() {
+          cursorX += (mouseX - cursorX) * 0.6; // Easing for smoother movement
+          cursorY += (mouseY - cursorY) * 0.6;
+      
+          customCursor.style.left = `${cursorX}px`;
+          customCursor.style.top = `${cursorY}px`;
+
+          requestAnimationFrame(updateCursor);
+        }
+
+        updateCursor(); // Start custom cursor tracking
       });
 
 
