@@ -711,36 +711,13 @@
     button, a, input, label {
       cursor: none !important;
     }
-
-    body, .large-pill, .small-pill {
-      cursor: none !important;
-    }
-
-  /* Additional styles for the custom cursor */
-    .custom-cursor {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 30px; /* adjust size as needed */
-      height: 30px; /* adjust size as needed */
-      background: rgba(255, 255, 255, 0.7); /* frosted glass effect */
-      border-radius: 50%;
-      pointer-events: none; /* Prevent cursor from interfering with clicks */
-      transition: transform 0.1s ease;
-      transform: translate(-50%, -50%);
-    }
    
   </style>
-  <div class="language-toggle" id="languageToggle">
-    <button id="langEn" class="lang-btn" onclick="switchLanguage('en')">English</button>
-    <button id="langZh" class="lang-btn" onclick="switchLanguage('zh')">中文</button>
-  </div>
-
 </head>
 <body>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <div class="custom-cursor"></div>
+ <div class="custom-cursor"></div>
   <!-- APPLE STYLE SCENES -->
  <main>
     <div id="language-toggle" class="language-toggle">
@@ -1178,85 +1155,6 @@
       langButtonEn.addEventListener('click', () => switchLanguage('en'));
       langButtonZh.addEventListener('click', () => switchLanguage('zh'));
     });
-
-
-
-    // Translation data
-      const translations = {
-        en: {
-          heroTitle: "George's Gallery",
-          heroSub: "A place for your memories. Secure, beautiful, and permanent.",
-          feature1Title: "Visual Perfection",
-          feature1Desc: "Minimal, contemporary grid.",
-          feature2Title: "Permanent Cloud Storage",
-          feature2Desc: "Safe storage on Cloudinary.",
-      // Add other translations as needed
-        },
-        zh: {
-          heroTitle: "胡敬知的画廊",
-          heroSub: "一个存放你记忆的地方，安全，美丽，持久。",
-          feature1Title: "视觉完美",
-          feature1Desc: "极简现代网格。",
-          feature2Title: "永久云存储",
-          feature2Desc: "Cloudinary 上的安全存储。",
-      // Add other translations as needed
-        }
-      };
-
-      let currentLang = 'en'; // default language
-
-  // Function to switch the language
-      function switchLanguage(lang) {
-        currentLang = lang;
-
-    // Update content dynamically based on selected language
-        document.querySelector('.hero-title').textContent = translations[lang].heroTitle;
-        document.querySelector('.hero-sub').innerHTML = translations[lang].heroSub;
-
-        document.querySelector('.feature1-title').textContent = translations[lang].feature1Title;
-        document.querySelector('.feature1-desc').textContent = translations[lang].feature1Desc;
-
-        document.querySelector('.feature2-title').textContent = translations[lang].feature2Title;
-        document.querySelector('.feature2-desc').textContent = translations[lang].feature2Desc;
-
-    // Add all other sections similarly
-      }
-
-  // Detect and set default language on page load
-      window.addEventListener('DOMContentLoaded', () => {
-        const userLang = navigator.language.includes('zh') ? 'zh' : 'en';
-        switchLanguage(userLang);
-      });
-      
-      window.addEventListener('load', () => {
-    // Bind the native cursor to the custom cursor and hide native cursor
-        document.body.style.cursor = 'none'; // Hides native cursor immediately on load
-
-    // Set up the custom cursor tracking as before
-        const customCursor = document.createElement('div');
-        customCursor.classList.add('custom-cursor');
-        document.body.appendChild(customCursor);
-
-        let cursorX = 0, cursorY = 0;
-        let mouseX = 0, mouseY = 0;
-
-        document.addEventListener('mousemove', (e) => {
-          mouseX = e.clientX;
-          mouseY = e.clientY;
-        });
-  
-        function updateCursor() {
-          cursorX += (mouseX - cursorX) * 0.6; // Easing for smoother movement
-          cursorY += (mouseY - cursorY) * 0.6;
-      
-          customCursor.style.left = `${cursorX}px`;
-          customCursor.style.top = `${cursorY}px`;
-
-          requestAnimationFrame(updateCursor);
-        }
-
-        updateCursor(); // Start custom cursor tracking
-      });
 
 
 
