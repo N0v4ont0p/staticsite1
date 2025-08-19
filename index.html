@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -31,6 +31,44 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
   <style>
+
+    .language-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 8px 16px;
+      border-radius: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      z-index: 9999;
+    }
+
+    .lang-btn {
+      background: transparent;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      margin: 0 5px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .lang-btn.active {
+     background-color: rgba(0, 112, 243, 0.6);
+    }
+
+    .lang-btn:hover {
+      background-color: rgba(0, 112, 243, 0.3);
+    }
+
 
     /* Light Theme Styles */
     body.light {
@@ -682,11 +720,16 @@
  <div class="custom-cursor"></div>
   <!-- APPLE STYLE SCENES -->
  <main>
-  <section class="scene scene-hero">
-    <div class="hero-content">
-    <span class="hero-icon" style="margin-bottom: 0.5rem;">
-    <img src="logo.png" alt="Logo" style="height: 260px; width: auto; margin-bottom: 0;" /> </span>
-      <div class="hero-title">George's Gallery</div>
+    <div id="language-toggle" class="language-toggle">
+      <button id="lang-en" class="lang-btn active">EN</button>
+      <button id="lang-zh" class="lang-btn">简体</button>
+    </div>
+
+    <section class="scene scene-hero">
+      <div class="hero-content">
+        <span class="hero-icon" style="margin-bottom: 0.5rem;">
+          <img src="logo.png" alt="Logo" style="height: 260px; width: auto; margin-bottom: 0;" /> </span>
+        <div class="hero-title">George's Gallery</div>
       <!-- 🌗 Dark Mode Toggle Button -->
       <div class="hero-sub">A place for your memories.<br>Secure, beautiful, and permanent.<br>Fast, global, and effortless.</div>
       <div class="hero-cta-group">
@@ -1058,13 +1101,63 @@
       cursor.style.top = `${mouseY}px`;
 
   // Update cursor position on mouse move
-      document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        cursor.style.left = `${mouseX}px`;
-        cursor.style.top = `${mouseY}px`;
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      cursor.style.left = `${mouseX}px`;
+      cursor.style.top = `${mouseY}px`;
       });
     });
+
+    document.addEventListener('DOMContentLoaded', () => {
+  // Auto-detect language
+      const userLang = navigator.language || navigator.userLanguage;
+      const langButtonEn = document.getElementById('lang-en');
+      const langButtonZh = document.getElementById('lang-zh');
+  
+  // Default to English
+      let currentLang = 'en';
+
+  // If the user's language is Simplified Chinese or English, set that as the default
+      if (userLang.startsWith('zh')) {
+        currentLang = 'zh';
+        langButtonZh.classList.add('active');
+        langButtonEn.classList.remove('active');
+      } else {
+        langButtonEn.classList.add('active');
+        langButtonZh.classList.remove('active');
+      }
+
+  // Update content when switching languages
+      const switchLanguage = (lang) => {
+        if (lang === 'en') {
+          currentLang = 'en';
+          langButtonEn.classList.add('active');
+          langButtonZh.classList.remove('active');
+          document.documentElement.lang = 'en';
+      // Set English content (Example of one text to switch)
+          document.querySelector('.hero-title').innerText = "George's Gallery";
+          document.querySelector('.hero-sub').innerHTML = "A place for your memories.<br>Secure, beautiful, and permanent.<br>Fast, global, and effortless.";
+      // You can expand this with more content updates as per your needs
+        } else if (lang === 'zh') {
+          currentLang = 'zh';
+          langButtonZh.classList.add('active');
+          langButtonEn.classList.remove('active');
+          document.documentElement.lang = 'zh';
+      // Set Chinese content
+          document.querySelector('.hero-title').innerText = "胡敬知的画廊";
+          document.querySelector('.hero-sub').innerHTML = "这是你记忆的地方。<br>安全、美丽且永久。<br>快速、全球和轻松。";
+      // Expand for other translations
+        }
+      };
+
+  // Language toggle event listeners
+      langButtonEn.addEventListener('click', () => switchLanguage('en'));
+      langButtonZh.addEventListener('click', () => switchLanguage('zh'));
+    });
+
+
+
 
 
 
