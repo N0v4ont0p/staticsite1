@@ -573,7 +573,7 @@
       -webkit-backdrop-filter: blur(10px) saturate(180%);
       border: 1px solid rgba(255, 255, 255, 0.3);
       transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
-      z-index: 9999;
+      z-index: 9999 !important;
       will-change: transform;
       transform: translate3d(0, 0, 0);
       transform: translate3d(var(--cursor-x), var(--cursor-y), 0);
@@ -1095,6 +1095,10 @@
         cursor.style.left = `${mouseX}px`;
         cursor.style.top = `${mouseY}px`;
       });
+    });
+
+    window.addEventListener("scroll", () => {
+      document.body.style.cursor = "none"; 
     });
 
 
