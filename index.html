@@ -32,6 +32,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
   <style>
 
+    html, body {
+      overscroll-behavior-y: none; /* Prevents big white buffer at top */
+      margin: 0;
+      padding: 0;
+    }
+
+
     /* Light Theme Styles */
     body.light {
       background-color: #fff; /* Light background */
@@ -673,6 +680,15 @@
     button, a, input, label {
       cursor: none !important;
     }
+
+    body {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch; /* keeps smooth scroll, no blank gap */
+    }
+
    
   </style>
 </head>
