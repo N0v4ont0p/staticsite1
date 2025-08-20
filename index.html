@@ -566,30 +566,50 @@
     }    
     .custom-cursor {
       position: fixed;
-      width: 36px;
-      height: 36px;
+      top: 0; left: 0;
+      width: 54px; height: 54px;
       border-radius: 50%;
       pointer-events: none;
-      background: rgba(255, 255, 255, 0.1);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-      backdrop-filter: blur(10px) saturate(180%);
-      -webkit-backdrop-filter: blur(10px) saturate(180%);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
       z-index: 9999 !important;
-      will-change: transform;
-      transform: translate3d(0, 0, 0);
-      transform: translate3d(var(--cursor-x), var(--cursor-y), 0);
-      will-change: left, top; /* Add this to optimize performance */
+      will-change: transform, background, filter;
+      background:
+        radial-gradient(circle at 35% 30%, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.18) 70%),
+        rgba(255,255,255,0.12);
+      box-shadow:
+        0 4px 32px 0 rgba(0,0,0,0.18),
+        0 1.5px 6px 0 rgba(0,0,0,0.08);
+      border: 1.2px solid rgba(255,255,255,0.36);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      mix-blend-mode: lighten;
+      transition:
+        transform 0.13s cubic-bezier(0.22, 1, 0.36, 1),
+        background 0.2s,
+        border-color 0.18s;
+      cursor: none !important;
     }    
     body.dark .custom-cursor {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+      background:
+        radial-gradient(circle at 40% 30%, rgba(80,160,255,0.23) 0%, rgba(10,30,70,0.17) 80%),
+        rgba(30,40,60,0.07);
+      border: 1.5px solid rgba(90, 160, 255, 0.19);
+      box-shadow:
+        0 8px 32px rgba(0,0,0,0.27),
+        0 1.5px 6px 0 rgba(0,0,0,0.16);
+      mix-blend-mode: lighten;
     }
     /* Keep custom cursor style smooth and consistent */
     .custom-cursor {
-      cursor: none;
+      cursor: none !important;
+    }
+
+    .custom-cursor.hovered {
+      transform: scale(1.35);
+      background:
+        radial-gradient(circle at 40% 30%, rgba(0,112,243,0.38) 0%, rgba(255,255,255,0.18) 80%),
+        rgba(0,112,243,0.07);
+      border-color: #0070f3;
+      filter: brightness(1.2) saturate(1.4) blur(0.2px);
     }
 
 /* Pointer cursor on interactive elements */
