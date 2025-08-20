@@ -870,6 +870,10 @@
       e.preventDefault();  // Disable right-click context menu
     });
 
+    document.addEventListener("scroll", () => {
+      document.body.style.cursor = "none";
+    });
+
     
     gsap.registerPlugin(ScrollTrigger);
 
