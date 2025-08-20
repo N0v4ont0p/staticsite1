@@ -564,65 +564,120 @@
       color: #00c6fd; /* Highlight footer links on hover */
       text-decoration: underline;
     }    
-    .custom-cursor {
-      position: fixed;
-      top: 0; left: 0;
-      width: 54px; height: 54px;
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999 !important;
-      will-change: transform, background, filter;
-      background:
-        radial-gradient(circle at 35% 30%, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.18) 70%),
-        rgba(255,255,255,0.12);
-      box-shadow:
-        0 4px 32px 0 rgba(0,0,0,0.18),
-        0 1.5px 6px 0 rgba(0,0,0,0.08);
-      border: 1.2px solid rgba(255,255,255,0.36);
-      backdrop-filter: blur(16px) saturate(180%);
-      -webkit-backdrop-filter: blur(16px) saturate(180%);
-      mix-blend-mode: lighten;
-      transition:
-        transform 0.13s cubic-bezier(0.22, 1, 0.36, 1),
-        background 0.2s,
-        border-color 0.18s;
-      cursor: none !important;
-    }    
-    body.dark .custom-cursor {
-      background:
-        radial-gradient(circle at 40% 30%, rgba(80,160,255,0.23) 0%, rgba(10,30,70,0.17) 80%),
-        rgba(30,40,60,0.07);
-      border: 1.5px solid rgba(90, 160, 255, 0.19);
-      box-shadow:
-        0 8px 32px rgba(0,0,0,0.27),
-        0 1.5px 6px 0 rgba(0,0,0,0.16);
-      mix-blend-mode: lighten;
-    }
-    /* Keep custom cursor style smooth and consistent */
-    .custom-cursor {
-      cursor: none !important;
-    }
-
-    .custom-cursor.hovered {
-      transform: scale(1.35);
-      background:
-        radial-gradient(circle at 40% 30%, rgba(0,112,243,0.38) 0%, rgba(255,255,255,0.18) 80%),
-        rgba(0,112,243,0.07);
-      border-color: #0070f3;
-      filter: brightness(1.2) saturate(1.4) blur(0.2px);
-    }
+    
 
 /* Pointer cursor on interactive elements */
     button, a, input, label {
       cursor: none !important;
     }
 
-/* Cursor effect on hover */
-    .custom-cursor.hovered {
-      background: rgba(0, 112, 243, 0.8);
-      transform: scale(1.5);  /* This is to make the cursor bigger */
-      border-color: #0070f3;
+
+
+    .custom-cursor {
+      position: fixed;
+      top: 0; left: 0;
+      width: 66px;
+      height: 66px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999 !important;
+      will-change: transform, background, filter, opacity;
+  /* Multi-layered glass: */
+      background:
+    /* Subtle inner highlight */
+        radial-gradient(circle at 35% 35%, rgba(255,255,255,0.60) 0%, rgba(255,255,255,0.10) 60%, transparent 100%),
+    /* Core glass color */
+        linear-gradient(135deg, rgba(240,247,255,0.15) 0%, rgba(170,220,255,0.09) 100%),
+    /* Outer blue glass reflection */
+        radial-gradient(circle at 75% 20%, rgba(80,160,255,0.11) 0%, transparent 60%);
+      box-shadow:
+        0 8px 42px 0 rgba(0,0,0,0.21),
+        0 1.5px 8px 0 rgba(0,0,0,0.09),
+        0 0 0 0.5px rgba(255,255,255,0.22) inset;
+      border: 1.8px solid rgba(255,255,255,0.32);
+      backdrop-filter: blur(22px) saturate(180%);
+      -webkit-backdrop-filter: blur(22px) saturate(180%);
+      mix-blend-mode: lighten;
+      transition:
+        transform 0.13s cubic-bezier(0.22, 1, 0.36, 1),
+        background 0.22s,
+        border-color 0.16s,
+        opacity 0.15s,
+        filter 0.16s;
+      opacity: 0.96;
+      cursor: none !important;
+  /* For highlight animation */
+      overflow: visible;
     }
+    .custom-cursor::before {
+      content: "";
+      pointer-events: none;
+      position: absolute;
+      top: 17%;
+      left: 17%;
+      width: 66%;
+      height: 66%;
+      border-radius: 50%;
+      background: linear-gradient(120deg,rgba(255,255,255,0.28) 0%,rgba(255,255,255,0.05) 80%);
+      filter: blur(2px);
+      opacity: 0.75;
+      z-index: 2;
+      animation: cursorShine 2.1s infinite linear;
+      mix-blend-mode: screen;
+      curson: none !important;
+    }
+    @keyframes cursorShine {
+      0% { opacity: 0.75; transform: scale(1.04) rotate(0deg);}
+      50% { opacity: 0.95; transform: scale(1.12) rotate(22deg);}
+      100% { opacity: 0.75; transform: scale(1.04) rotate(0deg);}
+    }
+    .custom-cursor::after {
+      content: "";
+      position: absolute;
+      top: 4%;
+      left: 4%;
+      width: 92%;
+      height: 92%;
+      border-radius: 50%;
+      background: linear-gradient(150deg,rgba(255,255,255,0.29) 0%,rgba(255,255,255,0.02) 100%);
+      opacity: 0.44;
+      pointer-events: none;
+      z-index: 1;
+      filter: blur(1.1px);
+      mix-blend-mode: lighten;
+      cursor: none !important;
+    }
+
+    body.dark .custom-cursor {
+      background:
+        radial-gradient(circle at 38% 38%, rgba(140,210,255,0.10) 0%, rgba(40,48,85,0.08) 70%, transparent 100%),
+        linear-gradient(135deg, rgba(22,38,65,0.22) 0%, rgba(57,130,230,0.16) 100%),
+        radial-gradient(circle at 75% 20%, rgba(40,120,255,0.13) 0%, transparent 60%);
+      border: 1.5px solid rgba(80, 170, 255, 0.22);
+      box-shadow:
+        0 8px 38px rgba(0,0,0,0.33),
+        0 2px 14px rgba(27,70,130,0.08),
+        0 0 0 0.6px rgba(80,170,255,0.08) inset;
+      opacity: 0.93;
+      cursor:none !important;
+    }
+    .custom-cursor.hovered {
+      transform: scale(1.33);
+      background:
+        radial-gradient(circle at 40% 30%, rgba(0,112,243,0.15) 0%, rgba(255,255,255,0.13) 80%),
+        linear-gradient(135deg, rgba(0,112,243,0.16) 0%, rgba(80,180,255,0.08) 100%),
+        rgba(0,112,243,0.08);
+      border-color: #0070f3;
+      filter: brightness(1.14) saturate(1.5) blur(0.1px);
+      box-shadow:
+        0 10px 52px 0 rgba(0,112,243,0.16),
+        0 2.5px 10px 0 rgba(0,112,243,0.09),
+        0 0 0 0.7px #0070f3 inset;
+      opacity: 1;
+      cursor: none !important;
+    }
+    
+
 
     /* Liquid glass scrollbar */
 
