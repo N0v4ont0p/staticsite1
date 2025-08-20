@@ -567,6 +567,7 @@
     .custom-cursor {
       position: fixed;
       width: 36px;
+      transition: opacity 0.3s ease;
       height: 36px;
       border-radius: 50%;
       pointer-events: none;
@@ -589,7 +590,7 @@
     }
     /* Keep custom cursor style smooth and consistent */
     .custom-cursor {
-      cursor: none;
+      cursor: none !important;
     }
 
 /* Pointer cursor on interactive elements */
@@ -845,6 +846,20 @@
   <button id="darkToggle">🌙 Dark</button>
 
   <script>
+
+    // Select your custom cursor element
+    const cursor = document.querySelector(".custom-cursor");
+
+// Hide cursor when mouse leaves the page
+    document.addEventListener("mouseleave", () => {
+      cursor.style.opacity = "0"; // fade out
+    });
+
+// Show cursor again when mouse re-enters
+    document.addEventListener("mouseenter", () => {
+      cursor.style.opacity = "1"; // fade in
+    });
+
 
     document.addEventListener('DOMContentLoaded', () => {
     // Check if the device supports touch events
