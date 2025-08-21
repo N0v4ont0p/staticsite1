@@ -40,7 +40,6 @@
       border: none;
       box-shadow: none;
       cursor:none !important;
-      flex-shrink: 0;
     }
 
     body.light .footer-bg {
@@ -141,9 +140,6 @@
     html, body {
       cursor: none !important;
       height: 100%;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
       margin: 0;
       padding: 0;
       font-family: var(--font-main);
@@ -738,16 +734,6 @@
       transform: scale(1.06);
       box-shadow: 0 12px 36px #0070f355, 0 2px 16px #ececec;
       z-index: 10;
-    }
-
-    html, body {
-      overscroll-behavior-y: none; /* Already present */
-      overflow-x: hidden;
-      margin: 0;
-      padding: 0;
-      height: auto;     /* REMOVE height: 100% if present */
-      min-height: 100vh; /* Ensure body fills at least the viewport */
-      background: var(--background);
     }
 
 
