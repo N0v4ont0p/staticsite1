@@ -525,7 +525,8 @@
     }  
     #darkToggle {
       position: fixed;
-      bottom: 28px;
+      right: 28px;
+      bottom: calc(28px + env(safe-area-inset-bottom, 0px));
       right: 28px;
       padding: 0.55em 1.3em;
       font-size: 1rem;
