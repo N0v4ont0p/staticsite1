@@ -702,6 +702,23 @@
       cursor: none !important;
     }
 
+    /* Add to your CSS, after the .feature-card, .howto-card, .tech-card styles */
+    .feature-card,
+    .howto-card,
+    .tech-card {
+      transition: 
+        transform 0.2s cubic-bezier(0.4,0,0.2,1), 
+        box-shadow 0.2s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .feature-card:hover,
+    .howto-card:hover,
+    .tech-card:hover {
+      transform: scale(1.06);
+      box-shadow: 0 12px 36px #0070f355, 0 2px 16px #ececec;
+      z-index: 10;
+    }
+
 
    
   </style>
