@@ -32,6 +32,23 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
   <style>
 
+    .footer-bg {
+      width: 100vw;
+      background: #121212; /* Dark background for dark mode */
+      padding: 0;
+      margin: 0;
+      border: none;
+      box-shadow: none;
+      cursor:none !important;
+    }
+
+    body.light .footer-bg {
+      background: #f7faff; /* Light background for light mode */
+    }
+    body.dark .footer-bg {
+      background: #121212 !important; /* Ensure dark background in dark mode */
+    }
+
     *,
       html,
       body {
@@ -854,10 +871,12 @@
     </div>
   </section>
  </main>  
-  <footer class="footer">
-    <div>&copy; 2025 George’s Gallery</div>
-    <div>Sitemap &bull; Privacy Policy &bull; Terms</div>
-  </footer>
+  <footer class="footer-bg">
+      <div class="footer">
+        <div>&copy; 2025 George’s Gallery</div>
+        <div>Sitemap &bull; Privacy Policy &bull; Terms</div>
+      </div>
+    </footer>
 
   <button id="darkToggle">🌙 Dark</button>
 
