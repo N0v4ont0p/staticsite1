@@ -2,1148 +2,524 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>George's Gallery</title>
+  <title>George's Gallery | Modern Photo Gallery</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="Apple-inspired gallery with GSAP scroll scenes and cinematic transitions.">
-  <link
-    rel="preload"
-    href="https://fonts.gstatic.com/s/inter/v12/UcCO3Fwr9TTiCFxxik1f6k0o.ttf"
-    as="font"
-    type="font/woff2"
-    crossorigin="anonymous"
-  />
-  <link rel="preload" href="logo.png" as="image" type="image/png" />
-
+  
   <!-- Favicon -->
-  <!-- your other favicon and manifest links -->
-
-  <!-- Fonts CSS link -->
-  <!-- Favicon -->
-  <!-- Standard Favicon -->
-  <!-- SVG for modern browsers -->
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <!-- Apple Touch Icon -->
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <!-- Web App Manifest -->
   <link rel="manifest" href="site.webmanifest">
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-  <style>
-
-    .footer-bg {
-      width: 100vw;
-      background: #121212; /* Dark background for dark mode */
-      padding: 0;
-      margin: 0;
-      border: none;
-      box-shadow: none;
-      cursor:none !important;
-    }
-
-    body.light .footer-bg {
-      background: #f7faff; /* Light background for light mode */
-    }
-    body.dark .footer-bg {
-      background: #121212 !important; /* Ensure dark background in dark mode */
-    }
-
-    *,
-      html,
-      body {
-      cursor: none !important;
-    }
-
-    html, body {
-      overscroll-behavior-y: none; /* Prevents big white buffer at top */
-      overflow-x: hidden;
-      margin: 0;
-      padding: 0;
-    }
-
-
-    /* Light Theme Styles */
-    body.light {
-      background-color: #fff; /* Light background */
-      color: #333; /* Dark text */
-    }
-
-    /* Dark Theme Styles */
-    body.dark {
-      background-color: #0d1117 !important; 
-      color: #fff; /* Light text */
-    }
-
-
-    .snap-container {
-      height: auto;
-      overflow-y: visible;
-      scroll-behavior: smooth;
-    }
-    
-    :root {
-      --accent: #0070f3;
-      --accent2: #00c6fd;
-      --background: #f7faff;
-      --radius: 32px;
-      --font-main: 'Inter', 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
-      --gradient-hero: linear-gradient(120deg,#eaf1fd 0%, #d4eafd 100%);
-      --gradient-card: linear-gradient(120deg,#fff 0%, #eaf1fd 100%);
-    }
-    body.dark {
-      --accent: #4ea8ff;
-      --accent2: #00c6fd;
-      --background: #0d1117;
-      --gradient-hero: linear-gradient(120deg,#1b1f27 0%, #0d1117 100%);
-      --gradient-card: linear-gradient(120deg,#161b22 0%, #0d1117 100%);
-      color: #fff;  /* change from #f0f6fc to #fff */
-    }
-    /* Also force all normal text in dark mode sections to white */
-    body.dark .feature-desc,
-    body.dark .howto-desc,
-    body.dark .tech-desc,
-    body.dark .contact-sub,
-    body.dark .darktoggle
-    body.dark .contact-details {
-      color: #fff;
-    }
-    body.dark .hero-sub {
-      color: #fff;
-    }
-
-    body.dark .scene:not(:first-of-type)::before {
-      background: linear-gradient(to right, #333, #444);
-    }
-    
-    body.dark .footer h5 {
-      color: #333;
-    }
-    body.dark .footer ul li {
-      color: #555;
-    }
-
-    @keyframes fadeZoom {
-      0% {
-        opacity: 0;
-        transform: scale(0.8);
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-
-    .hero-icon img {
-      animation: fadeZoom 1.2s ease-out both;
-    }
-    html, body {
-      cursor: none !important;
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      font-family: var(--font-main);
-      background: var(--background);
-      color: #222;
-      font-size: 19px;
-      line-height: 1.75;
-      letter-spacing: .01em;
-      overflow-x: visible;
-      scroll-behavior: smooth;
-      max-width: 100%;
-    }
-    /* ✅ Force dark background behind footer */
-    body.dark,
-    html.dark {
-      background-color: #0d1117 !important;
-    }
-    .scene {
-      padding: 10vh 5vw;
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      box-sizing: border-box;
-      z-index: 1;
-      position: relative;
-      overflow: visible;
-    }
-    .scene:not(:first-of-type)::before {
-      content: "";
-      display: block;
-      height: 1px;
-      width: 100%;
-      background: linear-gradient(to right, #d0d7e1, #f0f4f9);
-      margin-bottom: 4vh;
-    }
-    .scene-hero {
-      padding-bottom: 10vh;
-      z-index: 1;
-      background: var(--gradient-hero);
-    }
-    .scene-features,
-    .scene-howto,
-    .scene-tech,
-    .scene-contact {
-      background: var(--gradient-card);
-      padding-top: 6vh;
-      padding-bottom: 6vh;
-    }
-    .scene-title {
-      font-size: 2.2rem;
-      font-weight: 900;
-      letter-spacing: -1px;
-      margin: 0 0 2rem 0;
-      text-align: center;
-      background: linear-gradient(90deg,#0070f3 25%,#00c6fd 80%);
-      background-clip: text; -webkit-background-clip: text; color: transparent;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 2px 8px #eaf1fd;
-      will-change: opacity, transform;
-      z-index: 3;
-      position: relative;
-      cursor: none !important;
-    }
-    .hero-content {
-      max-width: 820px;
-      width: 100%;
-      text-align: center;
-      margin: 0 auto;
-      will-change: opacity, transform;
-      z-index: 2;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding-bottom: 10vh;
-    }
-    .hero-icon {
-      font-size: 5rem;
-      color: var(--accent);
-      opacity: .28;
-      display: block;
-      margin-bottom: 1.5rem;
-      will-change: opacity, transform;
-    }
-    .hero-title {
-      font-size: 3.2rem;
-      font-weight: 900;
-      letter-spacing: -2px;
-      margin-bottom: .8em;
-      background: linear-gradient(90deg,#0070f3 25%,#00c6fd 80%);
-      background-clip: text; -webkit-background-clip: text; color: transparent;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 2px 8px #eaf1fd;
-      will-change: opacity, transform;
-      position: relative;
-      z-index: 3;
-      margin-top: 0;
-      cursor: none !important;
-    }
-    .hero-sub {
-      font-size: 1.32rem;
-      color: #555;
-      font-weight: 400;
-      margin-bottom: 1rem;
-      max-width: 520px;
-      margin: 0 auto 1em auto;
-      will-change: opacity, transform;
-      position: relative;
-      z-index: 3;
-    }
-    .hero-badges {
-      display: flex;
-      justify-content: center;
-      gap: 1.2rem;
-      flex-wrap: wrap;
-      margin-bottom: 2em;
-      margin-top: 1.5em;
-      will-change: opacity, transform;
-      z-index: 3;
-      position: relative;
-    }
-    .badge {
-      background: #fff;
-      color: var(--accent);
-      font-weight: 700;
-      padding: .5em 1.2em;
-      border-radius: 18px;
-      box-shadow: 0 2px 18px #eaf1fd33;
-      font-size: 1.1em;
-      letter-spacing: -.5px;
-      display: flex;
-      align-items: center;
-      gap: .6em;
-      will-change: opacity, transform;
-      z-index: 3;
-      position: relative;
-    }
-    .hero-cta-group {
-      display: flex;
-      justify-content: center;
-      gap: 1.2rem;
-      margin-top: 1.7rem;
-      flex-wrap: wrap;
-      will-change: opacity, transform;
-      position: relative;
-      z-index: 5;
-    }
-    .hero-cta {
-      display: inline-block;
-      font-size: 1.14em;
-      background: var(--accent2);
-      color: #fff;
-      border-radius: 13px;
-      padding: 1em 2.5em;
-      font-weight: 700;
-      letter-spacing: .02em;
-      border: none;
-      cursor: none;
-      outline: none;
-      box-shadow: 0 4px 22px #0070f342;
-      transition: background .2s, transform .2s;
-      text-decoration: none;
-      will-change: opacity, transform;
-      z-index: 5;
-      position: relative;
-    }
-    .hero-cta:hover { background: #0070f3; transform: scale(1.09);}
-    .hero-cta.source {
-      background: #fff;
-      color: var(--accent);
-      border: 2px solid var(--accent);
-      box-shadow: 0 4px 22px #0070f320;
-    }
-    .hero-cta.source:hover {
-      background: var(--accent);
-      color: #fff;
-      border: 2px solid var(--accent);
-      transform: scale(1.09);
-    }
-    .features-grid, .howto-grid, .tech-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-      justify-content: center;
-      align-items: stretch;
-      max-width: 1050px;
-      margin: 0 auto;
-      width: 100%;
-      position: relative;
-      z-index: 2;
-    }
-    .feature-card, .howto-card, .tech-card {
-      background: var(--gradient-card);
-      border-radius: 22px;
-      box-shadow: 0 8px 32px #0070f322,0 1px 12px #ececec;
-      padding: 2.2rem 1.5rem 1.6rem 1.5rem;
-      min-width: 280px;
-      max-width: 320px;
-      flex: 1 1 280px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
-      margin-bottom: 1.2rem;
-      will-change: opacity, transform;
-      z-index: 2;
-      background: var(--gradient-card);
-    }
-    .howto-card, .tech-card {
-      background: var(--gradient-card);
-    }
-    .feature-emoji, .howto-emoji, .tech-emoji {
-      font-size: 2.2em;
-      color: var(--accent2);
-      margin-bottom: .45em;
-      text-shadow: 0 2px 12px #eaf1fd77;
-      will-change: opacity, transform;
-      z-index: 3;
-      position: relative;
-    }
-    .feature-title, .howto-title, .tech-title {
-      font-size: 1.13em;
-      font-weight: 800;
-      color: var(--accent);
-      margin-bottom: .5em;
-      letter-spacing: -.2px;
-      text-align: center;
-      will-change: opacity, transform;
-      z-index: 3;
-      position: relative;
-    }
-    .feature-desc, .howto-desc, .tech-desc {
-      font-size: 1.04em;
-      color: #333;
-      text-align: center;
-      margin-bottom: .35em;
-      will-change: opacity, transform;
-      z-index: 3;
-      position: relative;
-    }
-    .contact-content {
-      max-width: 700px;
-      width: 100%;
-      text-align: center;
-      margin: 0 auto;
-      will-change: opacity, transform;
-      z-index: 2;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .contact-title {
-      font-size: 2.1rem;
-      font-weight: 900;
-      margin-bottom: .5em;
-      background: linear-gradient(90deg,#0070f3 20%,#00c6fd 80%);
-      background-clip: text; -webkit-background-clip: text; color: transparent;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 2px 12px #eaf1fd77;
-      will-change: opacity, transform;
-      z-index: 3;
-      position: relative;
-    }
-    .contact-sub {
-      font-size: 1.08em;
-      margin-bottom: 2em;
-      will-change: opacity, transform;
-      z-index: 3;
-      position: relative;
-    }
-    .contact-details {
-      font-size: 1.07em;
-      margin-bottom: 2em;
-      will-change: opacity, transform;
-      z-index: 3;
-      position: relative;
-    }
-    .footer {
-      background: transparent;
-      border: none;
-      box-shadow: none;
-      padding: 2.5rem 1.5rem;
-      font-size: 0.9rem;
-      color: #666;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      max-width: 1100px;
-      margin: 0 auto;
-      flex-wrap: wrap;
-      text-align: center;
-    }
-    .footer-cols { display: flex; gap: 2.5rem; flex: 2; flex-wrap: wrap;}
-    .footer-col { min-width: 140px;}
-    .footer-col h5 { margin:0 0 .7em 0; color:#222; font-size:1.1em;}
-    .footer-col ul { list-style:none; padding:0; margin:0;}
-    .footer-col ul li { margin-bottom:.6em;}
-    .footer-legal { flex:1; text-align:right; min-width:180px;}
-    @media (max-width: 1200px) {
-      .features-grid, .howto-grid, .tech-grid { max-width: 100vw; }
-    }
-    @media (max-width: 900px) {
-      .features-grid, .howto-grid, .tech-grid { flex-direction: column; gap: 1.4rem;}
-      .feature-card, .howto-card, .tech-card { max-width: 98vw; }
-      .footer-cols { flex-direction: column;}
-      .footer-legal { text-align: left; margin-top: 1.5em;}
-      .scene { padding: 0 2vw;}
-    }
-    @media (max-width: 600px) {
-      .scene {
-        padding: 8vh 5vw;
-        flex-direction: column;
-        gap: 0.5rem;
-        font-size: 0.85rem;
-      }
-      .hero-cta-group {
-      flex-direction: column;
-      gap: 0.8rem;
-      width: 100%;
-      align-items: center;
-      padding-top: 8vh;
-      padding-bottom: 8vh;
-    }
-
-    .hero-cta {
-      width: 90%;
-      font-size: 1.05em;
-      padding: 0.9em 0;
-    }
-
-    .hero-icon img {
-      max-width: 90%;
-      height: auto;
-    }
-
-    .feature-card,
-    .howto-card,
-    .tech-card {
-      max-width: 95vw;
-      padding: 1.5rem 1rem;
-    }
-      .hero-title {
-        font-size: 2.1rem;
-        line-height: 1.2;
-      }
-
-      .hero-sub {
-        font-size: 1rem;
-        padding: 0 1.2rem;
-      }
-
-      .scene {
-        padding: 0 5vw;
-      }
-
-      .scene-title {
-        font-size: 1.4rem;
-      }
-
-      .feature-desc,
-      .howto-desc,
-      .tech-desc {
-        font-size: 1rem;
-        padding: 0 0.8rem;
-      }
-
-      .footer {
-        flex-direction: column;
-        text-align: center;
-      }
-
-      .footer-legal {
-        text-align: center;
-        margin-top: 1rem;
-      }
-    }
-    }
-    body {
-      transition: background-color 0.4s ease, color 0.4s ease;
-    }  
-    #darkToggle {
-      position: fixed;
-      right: 28px;
-      bottom: calc(28px + env(safe-area-inset-bottom, 0px));
-      right: 28px;
-      padding: 0.55em 1.3em;
-      font-size: 1rem;
-      font-weight: 600;
-      color: black;
-      transition: 
-        background-color 0.4s ease,
-        color 0.4s ease,
-        border-color 0.4s ease,
-        box-shadow 0.4s ease,
-        transform 0.3s ease;
-      border-radius: 50px;
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      background: rgba(255, 255, 255, 0.06);
-      backdrop-filter: blur(18px) saturate(160%);
-      -webkit-backdrop-filter: blur(18px) saturate(160%);
-      box-shadow:
-        0 4px 30px rgba(0, 0, 0, 0.3),
-        inset 0 0 0.3px rgba(255, 255, 255, 0.2);
-      z-index: 9999;
-      cursor: none;
-      transition: all 0.3s ease;
-      font-family: 'Inter', sans-serif;
-      letter-spacing: 0.02em;
-    }
-
-    body.dark #darkToggle {
-      background: rgba(0, 0, 0, 0.3);
-      color: #fff;
-      border-color: rgba(255, 255, 255, 0.3);
-    }
-
-    #darkToggle:hover {
-      transform: scale(1.06);
-      background: rgba(255, 255, 255, 0.13);
-      box-shadow:
-        0 6px 36px rgba(0, 0, 0, 0.35),
-        inset 0 0 0.5px rgba(255, 255, 255, 0.3);
-    }
-     
-    body.dark .footer {
-      background: #121212; /* Dark background for the entire footer */
-      color: #ddd; /* Light text color for footer in dark mode */
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4); /* Optional: subtle shadow */
-      animation: none !important;  /* Disable animation in dark mode */
-    }
-    body.dark .footer a,
-    body.dark .footer ul li {
-      color: rgba(255, 255, 255, 0.7); /* Light footer links in dark mode */
-      text-decoration: none;
-    }
-    body.dark .footer a:hover {
-      color: #00c6fd; /* Highlight footer links on hover */
-      text-decoration: underline;
-    }    
-    .custom-cursor {
-      position: fixed;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      pointer-events: none;
-      background: rgba(255, 255, 255, 0.1);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-      backdrop-filter: blur(10px) saturate(180%);
-      -webkit-backdrop-filter: blur(10px) saturate(180%);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
-      z-index: 9999 !important;
-      will-change: transform;
-      transform: translate3d(0, 0, 0);
-      transform: translate3d(var(--cursor-x), var(--cursor-y), 0);
-      will-change: left, top; /* Add this to optimize performance */
-    }    
-    body.dark .custom-cursor {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-    }
-    /* Keep custom cursor style smooth and consistent */
-    .custom-cursor {
-      cursor: none;
-    }
-
-/* Pointer cursor on interactive elements */
-    button, a, input, label {
-      cursor: none !important;
-    }
-
-/* Cursor effect on hover */
-    .custom-cursor.hovered {
-      background: rgba(0, 112, 243, 0.8);
-      transform: scale(1.5);  /* This is to make the cursor bigger */
-      border-color: #0070f3;
-    }
-
-    /* Liquid glass scrollbar */
-
-    ::-webkit-scrollbar {
-      width: 10px;
-      transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-      background: transparent;
-    }
-
-    ::-webkit-scrollbar:hover {
-       width: 25px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: transparent;
-      margin-block: 6px;
-    }
-
-/* The thumb (the draggable part) */
-    ::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.15);
-      border-radius: 9999px;
-      border: 1.5px solid rgba(255, 255, 255, 0.3);
-      backdrop-filter: blur(12px) saturate(180%);
-      -webkit-backdrop-filter: blur(12px) saturate(180%);
-      box-shadow:
-        inset 0 0 8px rgba(255, 255, 255, 0.6),
-        0 0 8px rgba(255, 255, 255, 0.1);
-      position: relative;
-      transition: all 0.5s ease;
-      cursor: pointer;
-    }
-
-/* Shimmer effect: using a pseudo-element */
-      top: -150%;
-      left: -100%;
-      width: 300%;
-      height: 400%;
-      background: linear-gradient(
-        60deg,
-        rgba(255, 255, 255, 0.3) 0%,
-        rgba(255, 255, 255, 0.1) 50%,
-        rgba(255, 255, 255, 0.3) 100%
-      );
-      animation: shimmer 3s infinite linear;
-      filter: blur(3px);
-      transform: translateX(-100%);
-      border-radius: 9999px;
-      pointer-events: none;
-      z-index: 10;
-    }
-
-/* Hide shimmer by default */
-    ::-webkit-scrollbar-thumb:not(:hover)::before {
-      animation-play-state: paused;
-      opacity: 0;
-    }
-
-    ::-webkit-scrollbar-thumb:hover::before {
-      animation-play-state: running;
-    }
-
-/* On hover, brighten thumb & run shimmer */
-    ::-webkit-scrollbar-thumb:hover {
-      background: rgba(255, 255, 255, 0.25);
-      border-color: rgba(255, 255, 255, 0.45);
-      box-shadow:
-        inset 0 0 12px rgba(255, 255, 255, 0.8),
-        0 0 12px rgba(255, 255, 255, 0.2);
-    }
-
-/* Shimmer animation */
-    @keyframes shimmer {
-      0% {
-        transform: translateX(-100%);
-        opacity: 1;
-      }
-      100% {
-        transform: translateX(100%);
-        opacity: 1;
-      }
-    }
-
-    button, a, input, label {
-      cursor: none !important;
-    }
-
-    body {
-      width: 100%;
-      height: 100%;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch; /* keeps smooth scroll, no blank gap */
-    }
-    *,
-    html,
-    body {
-      cursor: none !important;
-    }
-
-    /* Add to your CSS, after the .feature-card, .howto-card, .tech-card styles */
-    .feature-card,
-    .howto-card,
-    .tech-card {
-      transition: 
-        transform 0.2s cubic-bezier(0.4,0,0.2,1), 
-        box-shadow 0.2s cubic-bezier(0.4,0,0.2,1);
-    }
-
-    .feature-card:hover,
-    .howto-card:hover,
-    .tech-card:hover {
-      transform: scale(1.06);
-      box-shadow: 0 12px 36px #0070f355, 0 2px 16px #ececec;
-      z-index: 10;
-    }
-
-
-   
-  </style>
-</head>
-<body>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- GSAP for animations -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
- <div class="custom-cursor"></div>
-  <!-- APPLE STYLE SCENES -->
- <main>
-  <section class="scene scene-hero">
-    <div class="hero-content">
-    <span class="hero-icon" style="margin-bottom: 0.5rem;">
-    <img src="logo.png" alt="Logo" style="height: 260px; width: auto; margin-bottom: 0;" /> </span>
-      <div class="hero-title">George's Gallery</div>
-      <!-- 🌗 Dark Mode Toggle Button -->
-      <div class="hero-sub">A place for your memories.<br>Secure, beautiful, and permanent.<br>Fast, global, and effortless.</div>
-      <div class="hero-cta-group">
-        <a class="hero-cta" href="https://new-2-3ju9.onrender.com" target="_blank" rel="noopener">Explore Gallery</a>
-        <a class="hero-cta source" href="https://github.com/N0v4ont0p/new-2/" target="_blank" rel="noopener">Source Code</a>
-      </div>
-      <div class="hero-badges">
-        <span class="badge">☁️ Cloud Storage</span>
-        <span class="badge">🔐 Secure Admin</span>
-        <span class="badge">🖼️ Stunning UI</span>
-        <span class="badge">🛡️ Bulletproof</span>
-        <span class="badge">🌍 Global</span>
-        <span class="badge">💸 Free Tier</span>
-       </div> 
-    </div>
-  </section>
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#007aff',
+            secondary: '#5856d6',
+            accent: '#ff2d55',
+            appleGray: {
+              50: '#f5f5f7',
+              100: '#e8e8ed',
+              200: '#d2d2d7',
+              300: '#c2c2c8',
+              400: '#a2a2a8',
+              500: '#86868b',
+              600: '#69696d',
+              700: '#515154',
+              800: '#3a3a3c',
+              900: '#1d1d1f',
+            },
+            dark: {
+              900: '#121212',
+              800: '#1e1e1e',
+              700: '#2a2a2a',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'Helvetica Neue', 'Arial', 'sans-serif'],
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.8s ease-out forwards',
+            'slide-up': 'slideUp 0.8s ease-out forwards',
+            'scale-in': 'scaleIn 0.6s ease-out forwards',
+            'float': 'float 6s ease-in-out infinite',
+          }
+        }
+      }
+    }
+  </script>
+  
+  <style>
+    /* Enhanced animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      33% { transform: translateY(-6px) rotate(1deg); }
+      66% { transform: translateY(4px) rotate(-1deg); }
+    }
+    
+    .animate-fade-in {
+      animation: fadeIn 0.8s ease-out forwards;
+    }
+    .animate-slide-up {
+      animation: slideUp 0.8s ease-out forwards;
+    }
+    .animate-scale-in {
+      animation: scaleIn 0.6s ease-out forwards;
+    }
+    .animate-float {
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    .delay-100 { animation-delay: 0.1s; }
+    .delay-200 { animation-delay: 0.2s; }
+    .delay-300 { animation-delay: 0.3s; }
+    .delay-400 { animation-delay: 0.4s; }
+    .delay-500 { animation-delay: 0.5s; }
+    .delay-600 { animation-delay: 0.6s; }
+    .delay-700 { animation-delay: 0.7s; }
+    
+    /* Enhanced glass card effect */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.125);
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .glass-card:hover {
+      transform: translateY(-8px) scale(1.01);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+      background: rgba(255, 255, 255, 0.8);
+    }
+    .dark .glass-card {
+      background: rgba(25, 25, 25, 0.6);
+      border: 1px solid rgba(255, 255, 255, 极.08);
+    }
+    .dark .glass-card:hover {
+      background: rgba(35, 35, 35, 0.7);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+    }
+    
+    /* Apple-like gradients */
+    .hero-gradient {
+      background: linear-gradient(135deg, rgba(0,122,255,0.1) 0%, rgba(0,122,255,0.03) 50%, rgba(0,122,255,0) 100%);
+    }
+    .dark .hero-gradient {
+      background: linear-gradient(135deg, rgba(0,122,255,0.08) 0%, rgba(0,122,255,0.02) 50%, rgba(0,0,0,0) 100%);
+    }
+    
+    /* Apple-style buttons */
+    .btn-hover {
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 12px rgba(0, 122, 255, 0.2);
+    }
+    .btn-hover:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 12px 30px rgba(0, 122, 255, 0.3);
+    }
+    
+    /* Apple-like navbar */
+    .navbar {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .dark .navbar {
+      background: rgba(0, 0, 0, 0.8);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    /* Text highlight effect */
+    .text-highlight {
+      position: relative;
+      display: inline-block;
+      z-index: 1;
+    }
+    .text-highlight::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 30%;
+      background: linear-gradient(90deg, rgba(0,122,255,0.2) 0%, rgba(0,122,255,0.1) 100%);
+      z-index: -1;
+      transition: height 0.3s ease;
+      border-radius: 2px;
+    }
+    .text-highlight:hover::after {
+      height: 105%;
+    }
+    
+    /* Feature icon styles */
+    .feature-icon {
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .glass-card:hover .feature-icon {
+      transform: scale(1.1) rotate(5deg);
+    }
+    
+    /* Decorative elements */
+    .decorative-circle {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.15;
+      filter: blur(40px);
+      z-index: -1;
+    }
+    
+    /* Logo styling */
+    .logo {
+      transition: all 0.3s ease;
+    }
+    .logo:hover {
+      transform: scale(1.1);
+    }
+    
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(0, 122, 255, 0.3);
+      border-radius: 4px;
+    }
+    .dark ::-webkit-scrollbar-thumb {
+      background: rgba(100, 100, 255, 0.3);
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 122, 255, 0.5);
+    }
+    
+    /* Stats counter */
+    .stat-number {
+      font-variant-numeric: tabular-nums;
+    }
+  </style>
+</head>
+<body class="bg-appleGray-50 dark:bg-dark-900 text-appleGray-900 dark:text-appleGray-100 font-sans min-h-screen transition-colors duration-500">
+  <!-- Decorative background elements -->
+  <div class="decorative-circle w-80 h-80 bg-primary -top-40 -left-40 animate-float"></div>
+  <div class="decorative-circle w-96 h-96 bg-secondary top-1/2 -right-40 animate-float delay-300" style="animation-duration: 8s;"></div>
+  <div class="decorative-circle w-64 h-64 bg-accent bottom-0 left-1/3 animate-float delay-700" style="animation-duration: 9s;"></div>
 
-  <section class="scene scene-features">
-    <div class="scene-title">Experience the Features</div>
-    <div class="features-grid">
-      <div class="feature-card">
-        <span class="feature-emoji">🎨</span>
-        <div class="feature-title">Visual Perfection</div>
-        <div class="feature-desc">Minimal, contemporary grid. Edge-to-edge images, soft gradients, and interactive microinteractions make every photo pop.</div>
+  <!-- Apple-like navbar -->
+  <nav class="navbar fixed w-full z-50 py-4 px-6 sm:px-8 lg:px-12">
+    <div class="max-w-6xl mx-auto flex justify-between items-center">
+      <a href="#" class="text-xl font-semibold flex items-center">
+        <img src="logo.png" alt="George's Gallery Logo" class="logo w-8 h-8 mr-2">
+        <span>George's Gallery</span>
+      </a>
+      <div class="hidden md:flex space-x-8">
+        <a href="#features" class="text-sm hover:text-primary transition-colors duration-300">Features</a>
+        <a href="#howto" class="text-sm hover:text-primary transition-colors duration-300">How To Use</a>
+        <a href="#tech" class="text-sm hover:text-primary transition-colors duration-300">Technology</a>
+        <a href="https://new-2-3ju9.onrender.com" class="text-sm text-primary hover:opacity-80 transition-colors duration-300">View Gallery</a>
       </div>
-      <div class="feature-card">
-        <span class="feature-emoji">☁️</span>
-        <div class="feature-title">Permanent Cloud Storage</div>
-        <div class="feature-desc">Photos are safe from server restarts and redeployments, stored on Cloudinary with CDN for global speed. 25GB free.</div>
-      </div>
-      <div class="feature-card">
-        <span class="feature-emoji">🔐</span>
-        <div class="feature-title">Secure Admin</div>
-        <div class="feature-desc">Password-protected panel at <b>/admin</b> lets you upload, batch manage, and delete photos with instant feedback. Password: <b>Hanshow99@</b></div>
-      </div>
-      <div class="feature-card">
-        <span class="feature-emoji">🛡️</span>
-        <div class="feature-title">Bulletproof Reliability</div>
-        <div class="feature-desc">Fallback mechanisms and metadata backup mean your gallery never loses data. Admin-only controls keep things safe.</div>
-      </div>
-      <div class="feature-card">
-        <span class="feature-emoji">💸</span>
-        <div class="feature-title">Free Tier Limits</div>
-        <div class="feature-desc">Render: 750 hours/month, sleeps after 15 mins idle. Cloudinary: 25GB/month, global CDN. Always free for personal galleries.</div>
-      </div>
+      <button id="theme-toggle" class="p-2 rounded-full hover:bg-appleGray-200 dark:hover:bg-appleGray-800 transition-colors duration-300">
+        <i class="fa-solid fa-moon dark:hidden"></i>
+        <i class="fa-solid fa-sun hidden dark:block"></i>
+      </button>
     </div>
-  </section>
+  </nav>
 
-  <section class="scene scene-howto">
-    <div class="scene-title">How To Use</div>
-    <div class="howto-grid">
-      <div class="howto-card">
-        <span class="howto-emoji">🌍</span>
-        <div class="howto-title">Public Gallery</div>
-        <div class="howto-desc">
-          <b>1.</b> Browse all photos in a stunning grid.<br>
-          <b>2.</b> Click any image for a full-screen modal.<br>
-          <b>3.</b> Download with one click.
+  <div class="min-h-screen flex flex-col pt-16">
+    <!-- Header -->
+    <header class="py-24 px-4 sm:px-6 lg:px-8 animate-slide-up">
+      <div class="max-w-4xl mx-auto text-center">
+        <div class="inline-flex items-center justify-center mb-6 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium">
+          <i class="fa-solid fa-rocket mr-2"></i> Modern Photo Gallery
         </div>
+        <h1 class="text-5xl sm:text-6xl font-bold mb-5 tracking-tight">George's <span class="text-highlight">Gallery</span></h1>
+        <div class="h-px w-24 mx-auto bg-appleGray-300 dark:bg-appleGray-700 mb-6"></div>
+        <p class="text-xl sm:text-2xl text-appleGray-500 dark:text-appleGray-400 font-light max-w-2xl mx-auto tracking-wide leading-relaxed">
+          A place for your memories. Secure, beautiful, and permanent.
+        </p>
       </div>
-      <div class="howto-card">
-        <span class="howto-emoji">🔑</span>
-        <div class="howto-title">Admin Panel</div>
-        <div class="howto-desc">
-          <b>1.</b> Go to <b>/admin</b><br>
-          <b>3.</b> Drag & drop upload, batch support<br>
-          <b>4.</b> Delete by hover & click
-        </div>
-      </div>
-    </div>
-  </section>
+    </header>
 
-  <section class="scene scene-tech">
-    <div class="scene-title">The Tech Behind It</div>
-    <div class="tech-grid">
-      <div class="tech-card">
-        <span class="tech-emoji">💻</span>
-        <div class="tech-title">Frontend</div>
-        <div class="tech-desc">
-          ⚡ <b>React.js SPA</b><br>
-          🖼️ CSS Grid & Modal Viewer<br>
-          🔒 Admin login system
+    <!-- Stats Section -->
+    <div class="px-4 sm:px-6 lg:px-8 mb-16 animate-fade-in delay-300">
+      <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div class="glass-card rounded-2xl p-6 text-center">
+          <div class="text-3xl font-bold text-primary stat-number">25GB</div>
+          <div class="text-appleGray-500 dark:text-appleGray-400 mt-2">Free Storage</div>
         </div>
-      </div>
-      <div class="tech-card">
-        <span class="tech-emoji">🖥️</span>
-        <div class="tech-title">Backend</div>
-        <div class="tech-desc">
-          🐍 <b>Flask API</b><br>
-          🌐 CORS enabled<br>
-          ☁️ Cloudinary SDK
+        <div class="glass-card rounded-2xl p-6 text-center">
+          <div class="text-3xl font-bold text-primary stat-number">100%</div>
+          <div class="text-appleGray-500 dark:text-appleGray-400 mt-2">Uptime</div>
         </div>
-      </div>
-      <div class="tech-card">
-        <span class="tech-emoji">🗂️</span>
-        <div class="tech-title">Storage System</div>
-        <div class="tech-desc">
-          Cloudinary: Fast, secure<br>
-          Base64 fallback<br>
-          JSON metadata backup
+        <div class="glass-card rounded-2xl p-6 text-center">
+          <div class="text-3xl font-bold text-primary stat-number">0$</div>
+          <div class="text-appleGray-500 dark:text-appleGray-400 mt-2">Cost</div>
+        </div>
+        <div class="glass-card rounded-2xl p-6 text-center">
+          <div class="text-3xl font-bold text-primary stat-number">1-Click</div>
+          <div class="text-appleGray-500 dark:text-appleGray-400 mt-2">Downloads</div>
         </div>
       </div>
     </div>
-  </section>
 
-  <section class="scene scene-contact">
-    <div class="scene-title">Contact & Safety</div>
-    <div class="contact-content">
-      <span style="font-size:3em; color:var(--accent2); margin-bottom:.3em;">✅</span>
-      <div class="contact-title">Your photos are safe. Forever.</div>
-      <div class="contact-sub">
-        Beautiful. Modern. Fast. Secure.<br>
-        <strong>100% free to run</strong>
+    <!-- Main Content -->
+    <main class="flex-grow px-4 sm:px-6 lg:px-8 py-8">
+      <div class="max-w-6xl mx-auto">
+        <!-- Hero Section -->
+        <div class="glass-card rounded-3xl p-10 sm:p-12 mb-16 hero-gradient overflow-hidden animate-scale-in relative">
+          <div class="absolute -top-10 -right-10 w-40 h-40 bg-primary rounded-full opacity-5 blur-3xl"></div>
+          <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-secondary rounded-full opacity-5 blur-3xl"></div>
+          
+          <div class="text-center relative z-10">
+            <div class="flex justify-center mb-8">
+              <img src="logo.png" alt="George's Gallery Logo" class="logo w-48 h-48">
+            </div>
+            <h2 class="text-3xl sm:text-4xl font-semibold mb-8">Your Memories, Beautifully Preserved</h2>
+            <p class="text-xl mb-10 text-appleGray-600 dark:text-appleGray-300 max-w-3xl mx-auto leading-relaxed">
+              A modern, secure photo gallery with cloud storage, admin panel, and beautiful UI.
+              Fast, global, and completely free for personal use.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4 mb-10">
+              <a href="https://new-2-3ju9.onrender.com" class="inline-flex items-center justify-center bg-primary hover:bg-blue-600 text-white font-medium rounded-full px-8 py-4 text-lg tracking-wide btn-hover transform transition-transform duration-300">
+                <i class="fa-solid fa-images mr-3"></i> Explore Gallery
+              </a>
+              <a href="https://github.com/N0v4ont0p/new-2/" class="inline-flex items-center justify-center bg-transparent border border-appleGray-300 dark:border-appleGray-700 text-appleGray-700 dark:text-appleGray-300 font-medium rounded-full px-8 py-4 text-lg tracking-wide btn-hover transform transition-transform duration-300">
+                <i class="fa-solid fa-code mr-3"></i> Source Code
+              </a>
+            </div>
+            <div class="text-sm text-appleGray-500 dark:text-appleGray-400">
+              <i class="fa-solid fa-bolt mr-1"></i> No registration required • Free to use • Updated daily
+            </div>
+          </div>
+        </div>
+
+        <!-- Features Grid -->
+        <div id="features" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-20">
+          <div class="glass-card rounded-2xl p-7 animate-slide-up delay-100">
+            <div class="flex items-center mb-5">
+              <div class="w-12 h-12 rounded-xl bg-primary bg-opacity-10 flex items-center justify-center mr-5 feature-icon">
+                <i class="fa-solid fa-palette text-primary text-xl"></i>
+              </div>
+              <h3 class="text-2xl font-semibold">Visual Perfection</h3>
+            </div>
+            <p class="text-appleGray-600 dark:text-appleGray-400 leading-relaxed mb-4">
+              Minimal, contemporary grid. Edge-to-edge images, soft gradients, and interactive microinteractions make every photo pop.
+            </p>
+          </div>
+
+          <div class="glass-card rounded-2xl p-7 animate-slide-up delay-200">
+            <div class="flex items-center mb-5">
+              <div class="w-12 h-12 rounded-xl bg-primary bg-opacity-10 flex items-center justify-center mr-5 feature-icon">
+                <i class="fa-solid fa-cloud text-primary text-xl"></i>
+              </div>
+              <h3 class="text-2xl font-semibold">Permanent Cloud Storage</h3>
+            </div>
+            <p class="text-appleGray-600 dark:text-appleGray-400 leading-relaxed mb-4">
+              Photos are safe from server restarts and redeployments, stored on Cloudinary with CDN for global speed. 25GB free.
+            </p>
+          </div>
+
+          <div class="glass-card rounded-2xl p-7 animate-slide-up delay-300">
+            <div class="极 items-center mb-5">
+              <div class="w-12 h-12 rounded-xl bg-primary bg-opacity-10 flex items-center justify-center mr-5 feature-icon">
+                <i class="fa-solid fa-lock text-primary text-xl"></i>
+              </div>
+              <h3 class="text-2xl font-semibold">Secure Admin</h3>
+            </div>
+            <p class="text-appleGray-600 dark:text-appleGray-400 leading-relaxed mb-4">
+              Password-protected panel at <b>/admin</b> lets you upload, batch manage, and delete photos with instant feedback.
+            </p>
+          </div>
+
+          <div class="glass-card rounded-2xl p-7 animate-slide-up delay-400">
+            <div class="flex items-center mb-5">
+              <div class="w-12 h-12 rounded-xl bg-primary bg-opacity-10 flex items-center justify-center mr-5 feature-icon">
+                <i class="fa-solid fa-shield-alt text-primary text-xl"></i>
+              </div>
+              <h3 class="text-2xl font-semibold">Bulletproof Reliability</h3>
+            </div>
+            <p class="text-appleGray-600 dark:text-appleGray-400 leading-relaxed mb-4">
+              Fallback mechanisms and metadata backup mean your gallery never loses data. Admin-only controls keep things safe.
+            </p>
+          </div>
+        </div>
+
+        <!-- How To Use Section -->
+        <div id="howto" class="glass-card rounded-3xl p-10 sm:p-12 mb-16 animate-scale-in delay-600">
+          <h2 class="text-3xl sm:text-4xl font-semibold text-center mb-12">How To Use</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="text-center">
+              <div class="w-20 h-20 rounded-2xl bg-primary bg-opacity-10 flex items-center justify-center mx-auto mb-6 feature-icon">
+                <span class="text-primary font-bold text-2xl">1</span>
+              </div>
+              <h3 class="text-xl font-medium mb-3">Public Gallery</h3>
+              <p class="text-appleGray-600 dark:text-appleGray-400">Browse all photos in a stunning grid. Click any image for a full-screen modal.</p>
+            </div>
+            <div class="text-center">
+              <div class="w-20 h-20 rounded-2xl bg-primary bg-opacity-10 flex items-center justify-center mx-auto mb-6 feature-icon">
+                <span class="text-primary font-bold text-2xl">2</span>
+              </div>
+              <h3 class="text-xl font-medium mb-3">Admin Panel</h3>
+              <p class="text-appleGray-600 dark:text-appleGray-400">Go to <b>/admin</b> to upload, manage, and delete photos with password protection.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Technology Section -->
+        <div id="tech" class="glass-card rounded-3xl p-10 sm:p-12 mb-16 animate-scale-in delay-500">
+          <h2 class="text-3xl sm:text-4xl font-semibold text-center mb-12">The Technology Behind It</h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="text-center">
+              <div class="w-20 h-20 rounded-2xl bg-primary bg-opacity-10 flex items-center justify-center mx-auto mb-6 feature-icon">
+                <i class="fa-solid fa-desktop text-primary text-2xl"></i>
+              </div>
+              <h3 class="text-xl font-medium mb-3">Frontend</h3>
+              <p class="text-appleGray-600 dark:text-appleGray-400">React.js SPA with CSS Grid and modal viewer</p>
+            </div>
+            <div class="text-center">
+              <div class="w-20 h-20 rounded-2xl bg-primary bg-opacity-10 flex items-center justify-center mx-auto mb-6 feature-icon">
+                <i class="fa-solid fa-server text-primary text-2xl"></i>
+              </div>
+              <h3 class="text-xl font-medium mb-3">Backend</h3>
+              <p class="text-appleGray-600 dark:text-appleGray-400">Flask API with CORS and Cloudinary SDK</p>
+            </div>
+            <div class="text-center">
+              <div class="w-20 h-20 rounded-2xl bg-primary bg-opacity-10 flex items-center justify-center mx-auto mb-6 feature-icon">
+                <i class="fa-solid fa-database text-primary text-2xl"></i>
+              </div>
+              <h3 class="text-xl font-medium mb-3">Storage</h3>
+              <p class="text-appleGray-600 dark:text-appleGray-400">Cloudinary with fallback and JSON metadata</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Final CTA -->
+        <div class="text-center mb-16 animate-fade-in delay-700">
+          <h3 class="text-2xl sm:text-3xl font-medium mb-8">Ready to explore your gallery?</h3>
+          <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="https://new-2-3ju9.onrender.com" class="inline-flex items-center justify-center bg-primary hover:bg-blue-600 text-white font-medium rounded-full px-10 py-4 text-lg tracking-wide btn-hover transform transition-transform duration-300">
+              <i class="fa-solid fa-bolt mr-3"></i> Launch Gallery Now
+            </a>
+            <a href="https://github.com/N0v4ont0p/new-2/" class="inline-flex items-center justify-center bg-transparent border border-appleGray-300 dark:border-appleGray-700 text-appleGray-700 dark:text-appleGray-300 font-medium rounded-full px-10 py-4 text-lg tracking-wide btn-hover transform transition-transform duration-300">
+              <i class="fa-solid fa-star mr-3"></i> Star on GitHub
+            </a>
+          </div>
+          <p class="text-appleGray-500 dark:text-appleGray-400 text-sm mt-6">
+            <i class="fa-solid fa-envelope mr-1"></i> Contact: georgehu67@gmail.com
+          </p>
+        </div>
       </div>
-      <div class="contact-details">
-        <strong>Contact:</strong> georgehu67@gmail.com<br>
-      </div>
-    </div>
-  </section>
- </main>  
-  <footer class="footer-bg">
-      <div class="footer">
-        <div>&copy; 2025 George’s Gallery</div>
-        <div>Sitemap &bull; Privacy Policy &bull; Terms</div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-12 px-4 sm:px-6 lg:px-8 text-center text-appleGray-500 dark:text-appleGray-500 text-sm tracking-wide">
+      <div class="max-w-4xl mx-auto border-t border-appleGray-200 dark:border-appleGray-800 pt-8">
+        <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+          <div class="flex items-center mb-4 md:mb-0">
+            <img src="logo.png" alt="George's Gallery Logo" class="logo w-6 h-6 mr-2">
+            <span class="text-xl font-semibold">George's Gallery</span>
+          </div>
+          <div class="flex space-x-6">
+            <a href="#" class="hover:text-primary transition-colors duration-300"><i class="fa-brands fa-github"></i></a>
+            <a href="#" class="hover:text-primary transition-colors duration-300"><i class="fa-brands fa-twitter"></i></a>
+            <a href="#" class="hover:text-primary transition-colors duration-300"><i class="fa-brands fa-instagram"></i></a>
+          </div>
+        </div>
+        <p>Created by George</p>
+        <p class="mt-2">© 2023 George's Gallery. All rights reserved.</p>
       </div>
     </footer>
+  </div>
 
-  <button id="darkToggle">🌙 Dark</button>
-
+  <!-- Font Awesome for icons -->
+  <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script>
+  
+  <!-- Theme toggle and animations script -->
   <script>
-
-    document.addEventListener('DOMContentLoaded', () => {
-    // Check if the device supports touch events
-      const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-
-    // If it's a touch device, disable the custom cursor
-      if (isTouchDevice) {
-        document.body.classList.add('touch-device'); // Add class to indicate it's a touch device
-      } else {
-        document.body.classList.add('non-touch-device');
-      }
-
-    // Add styles to hide the custom cursor on touch devices
-      const style = document.createElement('style');
-      style.innerHTML = `
-        body.touch-device .custom-cursor {
-          display: none; /* Hides the custom cursor on touch devices */
-        }
-      `;
-      document.head.appendChild(style);
-    });
-
-
-
-    document.addEventListener('contextmenu', (e) => {
-      e.preventDefault();  // Disable right-click context menu
-    });
-
-    document.addEventListener("scroll", () => {
-      document.body.style.cursor = "none";
-    });
-
+    // Force scroll to top on page load
+    window.onload = function() {
+      setTimeout(function() {
+        window.scrollTo(0, 0);
+      }, 0);
+    };
     
-    gsap.registerPlugin(ScrollTrigger);
-
-    // HERO: animate on scroll into view (not too early, not too late)
-    gsap.from(".scene-hero .hero-content > *", {
-      opacity: 0,
-      y: 40,
-      duration: 1,
-      ease: "power2.out",
-      stagger: 0.13,
-      scrollTrigger: {
-        trigger: ".scene-hero .hero-content",
-        start: "top 80%",
-        end: "bottom center",
-        toggleActions: "play reverse play reverse"
+    // Also handle back/forward navigation
+    window.onpageshow = function(event) {
+      if (event.persisted) {
+        window.scrollTo(0, 0);
       }
+    };
+
+    // Theme toggle functionality
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
     });
 
-    // All scene headings: fade/slide in, but always stay visible
-    gsap.utils.toArray(".scene-title").forEach(title => {
-      gsap.from(title, {
-        opacity: 0,
-        y: 32,
-        duration: 0.7,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: title,
-          start: "top 80%",
-          end: "bottom center",
-          toggleActions: "play reverse play reverse"
-        }
-      });
-    });
-
-    // Features: fade/slide in
-    gsap.from(".features-grid .feature-card", {
-      opacity: 0,
-      y: 40,
-      duration: 0.7,
-      stagger: 0.12,
-      ease: "power2.out",
-      scrollTrigger: {
-        trigger: ".features-grid",
-        start: "top 80%",
-        end: "bottom center",
-        toggleActions: "play reverse play reverse"
-      }
-    });
-
-    // Howto: fade/slide in
-    gsap.from(".howto-grid .howto-card", {
-      opacity: 0,
-      y: 40,
-      duration: 0.7,
-      stagger: 0.18,
-      ease: "power2.out",
-      scrollTrigger: {
-        trigger: ".howto-grid",
-        start: "top 80%",
-        end: "bottom center",
-        toggleActions: "play reverse play reverse"
-      }
-    });
-
-    // Tech: fade/slide in
-    gsap.from(".tech-grid .tech-card", {
-      opacity: 0,
-      y: 40,
-      duration: 0.7,
-      stagger: 0.18,
-      ease: "power2.out",
-      scrollTrigger: {
-        trigger: ".tech-grid",
-        start: "top 80%",
-        end: "bottom center",
-        toggleActions: "play reverse play reverse"
-      }
-    });
-
-    // Contact: fade/slide in
-    gsap.from(".scene-contact .contact-content > *", {
-      opacity: 0,
-      y: 20,
-      duration: 0.7,
-      stagger: 0.13,
-      ease: "power2.out",
-      scrollTrigger: {
-        trigger: ".scene-contact .contact-content",
-        start: "top 80%",
-        end: "bottom center",
-        toggleActions: "play reverse play reverse"
-      }
-    });
-
-    // Footer: fade in
-    gsap.from(".footer", {
-      opacity: 0,
-      y: 60,
-      duration: 1,
-      ease: "power2.out",
-      scrollTrigger: {
-        trigger: ".footer",
-        start: "top 99%",
-        toggleActions: "play reverse play reverse"
-      }
-    });
-// 🌙 Auto Detect System Preference on First Visit
-    const toggleButton = document.getElementById('darkToggle');
-
-// First time? Check system preference
-    if (localStorage.getItem('darkMode') === null) {
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      if (prefersDark) {
-        document.body.classList.add('dark');
-        localStorage.setItem('darkMode', true);
-      } else {
-        localStorage.setItem('darkMode', false);
-      }
-    }
-
-// Apply saved preference
-    if (localStorage.getItem('darkMode') === 'true') {
-      document.body.classList.add('dark');
-      toggleButton.textContent = '☀️ Light';
+    // Set initial theme
+    if (localStorage.getItem('theme') === 'dark' || 
+        (window.matchMedia('(prefers-color-scheme: dark)').matches && !localStorage.getItem('theme'))) {
+      document.documentElement.classList.add('dark');
     } else {
-      document.body.classList.add('light');
-      toggleButton.textContent = '🌙 Dark';
+      document.documentElement.classList.remove('dark');
     }
 
-// Toggle listener
-    toggleButton.addEventListener('click', () => {
-      const isDark = document.body.classList.toggle('dark');
-      toggleButton.textContent = isDark ? '☀️ Light' : '🌙 Dark';
-      localStorage.setItem('darkMode', isDark);
-    });
-
-
-    function setVh() {
-  // Get 1% of the window inner height
-      let vh = window.innerHeight * 0.01;
-  // Set the value in the --vh custom property on the root of the document
-      document.documentElement.style.setProperty('--vh', `${vh}px`);
-    }
-// Run at start
-    setVh();
-// Update on resize (when screen orientation changes or browser UI shows/hides)
-    window.addEventListener('resize', setVh);
-    
-    const cursor = document.querySelector('.custom-cursor');
-
-    let mouseX = 0;
-    let mouseY = 0;
-
-    document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      cursor.style.left = `${mouseX}px`;
-      cursor.style.top = `${mouseY}px`;
-      document.body.style.cursor = "none";
-    });
-
-    document.addEventListener('mouseleave', () => {
-      cursor.style.display = 'none';  // Hide cursor when mouse leaves the page
-    });
-
-    document.addEventListener('mouseenter', () => {
-      cursor.style.display = 'block';  // Show cursor when mouse re-enters the page
-    });
-
-    document.addEventListener('blur', () => {
-     cursor.style.display = 'none';  // Hide cursor when window loses focus
-    });
-
-    document.addEventListener('focus', () => {
-      cursor.style.display = 'block';  // Show cursor when window gains focus
-    });
-
-
-
-      const interactiveElements = document.querySelectorAll('button, a, input, label');
-
-      interactiveElements.forEach(el => {
-        el.addEventListener('mouseenter', () => {
-          cursor.classList.add('hovered');  // Adds hovered class
-        });
-
-        el.addEventListener('mouseleave', () => {
-          cursor.classList.remove('hovered');  // Removes hovered class
-        });
+    // Intersection Observer for animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-fade-in');
+        }
       });
-    // Detect system color scheme preference
-    document.addEventListener('DOMContentLoaded', () => {
-      const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }, { threshold: 0.1 });
 
-  // Apply the corresponding theme class
-      if (prefersDarkMode) {
-        document.body.classList.add('dark');
-        document.body.classList.remove('light');
-      } else {
-        document.body.classList.add('light');
-        document.body.classList.remove('dark');
+    // Observe all elements that need animation
+    document.querySelectorAll('.glass-card, .hero-gradient').forEach((el) => {
+      observer.observe(el);
+    });
+
+    // Smooth hover effects for all buttons
+    document.querySelectorAll('a').forEach(link => {
+      if (link.classList.contains('btn-hover')) {
+        link.addEventListener('mouseenter', () => {
+          link.style.transform = 'translateY(-3px) scale(1.02)';
+        });
+        link.addEventListener('mouseleave', () => {
+          link.style.transform = 'translateY(0) scale(1)';
+        });
       }
     });
-
-    document.addEventListener('DOMContentLoaded', () => {
-  // Get your custom cursor element by its class or ID
-      const cursor = document.querySelector('.custom-cursor');
-
-  // Set initial position to center of screen
-      let mouseX = window.innerWidth / 2;
-      let mouseY = window.innerHeight / 2;
-
-      cursor.style.left = `${mouseX}px`;
-      cursor.style.top = `${mouseY}px`;
-
-  // Update cursor position on mouse move
-      document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        cursor.style.left = `${mouseX}px`;
-        cursor.style.top = `${mouseY}px`;
-      });
-    });
-
-    window.addEventListener("scroll", () => {
-      document.body.style.cursor = "none"; 
-    });
-
-
-
   </script>
 </body>
 </html>
